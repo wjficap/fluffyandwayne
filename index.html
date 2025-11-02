@@ -213,7 +213,7 @@ body {
 <div id="bookmarkContainer"></div>
 
 <!-- --- Countdown Tiles Section --- -->
-<div class="separator"><span>ETA Countdown</span></div>
+<div class="separator"><span>Upcoming Events</span></div>
 <div id="specialCountdowns" class="countdown-grid"></div>
 
 <!-- --- Bookmark Container2 --- -->
@@ -233,8 +233,9 @@ const bookmarkGroups = [
       ["https://docs.google.com/spreadsheets/d/1M13JlDcU-y_4tGblzshoSoK7B2B3KMZC1elC1ApDem8/edit?gid=1256529310", "$PUTS (cash inc)"]
   ]},
   { title: "The FaR Life", bookmarks: [
-      ["https://docs.google.com/spreadsheets/d/1Lp8FHudrVeuiIhPqqYJvn6aoqj4obHIPb1LVZsTiCaU/edit?gid=723408462", "LIFE (closed acc)"],
-      ["https://docs.google.com/spreadsheets/d/1PZebfDw5_7qkuLb-toSVXtHnIKLf2qdAit2KT5PLPv4/edit?gid=905411831", "FaR (closed acc)"]
+      ["https://docs.google.com/spreadsheets/d/1PZebfDw5_7qkuLb-toSVXtHnIKLf2qdAit2KT5PLPv4/edit?gid=905411831", "FaR (closed acc)"],
+      ["https://docs.google.com/spreadsheets/d/1Lp8FHudrVeuiIhPqqYJvn6aoqj4obHIPb1LVZsTiCaU/edit?gid=723408462", "LIFE (closed acc)"]
+
   ]}
 
 ];
@@ -394,7 +395,7 @@ const specialItems = [
   { name: "SG REITS <br> Dividend Income", type: "quarterly", months: [2, 5, 8, 11], day: -1 },
   { name: "GODSPED <br> Dividend Income", type: "quarterly", months: [2, 5, 8, 11], day: -1 },
   { name: "$PUTS <br> Trading & Premium", type: "nthWeekday", weekday: 5, nth: 3 },
-  { name: "SAIL <br> Tenancy Status",
+  { name: "SAIL <br> Lease Expiry",
     type: "tenancy",
     start: { year: 2024, month: 1, day: 1 }, // 1 Feb 2025
     years: 2 // 1-year tenancy
@@ -683,7 +684,7 @@ const bookmarkGroups2 = [
   { title: "Brokers", bookmarks: [
       ["https://www.interactivebrokers.com.sg/sso/Login", "IBKR"],
       ["https://www.poems.com.sg/", "POEMS"],
-      ["https://crypto.com/exchange/", "Crypto.com"],
+      ["https://crypto.com/exchange/markets", "Crypto.com"],
       ["https://secure.fundsupermart.com/fsm/account/login", "FSMOne"]
   ]},
 
