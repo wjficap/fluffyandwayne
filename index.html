@@ -612,50 +612,59 @@ specialItems.forEach(i => {
   i._el = d;
 });
 
+// --- Sorted Dot-grid countdown update (ascending ETA) ---
+function updateCountdowns() {
+  const n = new Date();
+  const list = [];
 
-// --- Dot-grid countdown update ---
-function updateCountdowns(){
-  const n=new Date();
-  specialItems.forEach(i=>{
-    const nx=getNextDate(i), pv=getPrevDate(i,nx);
-    const totalDays = daysBetween(pv,nx);
-    let remaining = daysBetween(n,nx);
+  // Collect all countdown data first
+  specialItems.forEach(i => {
+    const nx = getNextDate(i), pv = getPrevDate(i, nx);
+    const totalDays = daysBetween(pv, nx);
+    let remaining = daysBetween(n, nx);
+    if (remaining < 0) remaining = 0;
+    list.push({ item: i, nx, pv, totalDays, remaining });
+  });
+
+  // Sort by ascending ETA
+  list.sort((a, b) => a.remaining - b.remaining);
+
+  // Clear and re-append in order
+  cdContainer.innerHTML = "";
+
+  list.forEach(({ item, nx, pv, totalDays, remaining }) => {
+    const i = item;
+    const d = i._el;
     const maxDots = 100;
     const dotCount = Math.min(totalDays, maxDots);
-
     let remainingDots = remaining > maxDots ? maxDots : remaining;
-    if(remainingDots<0) remainingDots=0;
 
-    const bar = i._el.querySelector(".dot-bar");
-    bar.innerHTML=""; // clear old dots
-    for(let d=0; d<dotCount; d++){
+    const bar = d.querySelector(".dot-bar");
+    bar.innerHTML = "";
+    for (let j = 0; j < dotCount; j++) {
       const dot = document.createElement("div");
-      dot.className="dot";
-      if(d<remainingDots){
-        // determine color
-        if(remainingDots<=10) dot.classList.add("red");
-        else if(remainingDots<=30) dot.classList.add("orange");
+      dot.className = "dot";
+      if (j < remainingDots) {
+        if (remainingDots <= 10) dot.classList.add("red");
+        else if (remainingDots <= 30) dot.classList.add("orange");
         else dot.classList.add("green");
       }
       bar.appendChild(dot);
     }
 
-    // Update text info
-    const dms = Math.max(0, nx - n);            // milliseconds remaining
-    const td = dms / 86400000;                  // total days remaining (fractional)
-    const ds = Math.floor(td);                  // total whole days
+    const ds = Math.floor(Math.max(0, (nx - n) / 86400000));
+    d.querySelector(".countdownText").textContent = `ETA: ${ds > 0 ? ds + " days" : "Due soon"}`;
+    d.querySelector(".date-range").textContent = `${fmtDate(pv)} → ${fmtDate(nx)}`;
+    d.querySelector(".cycleText").textContent = `Period: ${daysBetween(pv, nx)} days`;
 
-    const arr = [];
-    if (ds > 0) arr.push(`${ds} days`);
-
-    i._el.querySelector(".countdownText").textContent = `ETA: ${arr.length ? arr.join(" ") : "Due soon"}`;
-    i._el.querySelector(".date-range").textContent = `${fmtDate(pv)} → ${fmtDate(nx)}`;
-    i._el.querySelector(".cycleText").textContent = `Period: ${daysBetween(pv, nx)} days`;
-
+    // Re-append tile in sorted order
+    cdContainer.appendChild(d);
   });
 }
+
 updateCountdowns();
-setInterval(updateCountdowns,600000);
+setInterval(updateCountdowns, 600000);
+
 
 
 // --- Bookmarks2 Setup ---
