@@ -54,17 +54,20 @@ body {
   margin-top: 4px;
 }
 
+/* Dot grid inside each tile */
 .tile .progress-ring {
-  margin: 5px auto;
-  line-height: 0;
+  display: grid;
+  grid-template-columns: repeat(10, 1fr); /* always 10 per row */
+  gap: 2px;
+  width: 100%;
+  margin: 5px 0;
 }
 
 .tile span.dot {
-  width: 8px;
-  height: 8px;
-  display: inline-block;
-  margin: 1px;
+  width: 100%;
+  padding-top: 100%; /* makes each dot square */
   border-radius: 2px;
+  display: block;
 }
 </style>
 </head>
@@ -122,7 +125,6 @@ function getNextDate(i){
       x=nearest;
       break;
     case "season":
-      // FaR Seasonal logic with sub-periods
       const year = n.getFullYear();
       const periodStart = new Date(year, i.start.month, i.start.day);
       const nextYear = year + 1;
@@ -191,9 +193,7 @@ function updateCountdowns(){
       if(j>=remaining) color="lightgrey";
       dots.push(`<span class="dot" style="background:${color}"></span>`);
     }
-    const rows=[];
-    for(let r=0;r<Math.ceil(dots.length/10);r++) rows.push(dots.slice(r*10,r*10+10).join(''));
-    i._el.querySelector(".progress-ring").innerHTML = rows.join("<br>");
+    i._el.querySelector(".progress-ring").innerHTML = dots.join('');
     i._el.querySelector(".countdownText").textContent = `ETA: ${remaining} days`;
     i._el.querySelector(".date-range").textContent = `${fmtDate(pv)} → ${fmtDate(nx)}`;
     i._el.querySelector(".cycleText").textContent = `Period: ${daysBetween(pv,nx)} days`;
