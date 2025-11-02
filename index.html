@@ -216,16 +216,17 @@ body {
 <div class="separator"><span>ETA Countdown</span></div>
 <div id="specialCountdowns" class="countdown-grid"></div>
 
+<!-- --- Bookmark Container2 --- -->
+<div id="bookmarkContainer2"></div>
+
 <script>
 // --- Bookmarks Setup ---
 const bookmarkGroups = [
   { title: "Dashboard", bookmarks: [
       ["https://docs.google.com/spreadsheets/d/12Cp4o9yLMVKRsb57fNG-UYESj2huF5E2hg8iXI1W41A/edit?gid=0", "Total NAV"],
-      ["https://docs.google.com/spreadsheets/d/1VylQGw-ucq-fkypk2a3IW_5GJ8whKcVE1yiUPUmUa7E/edit?gid=1242144670", "Opex and BigTix"],
-      ["https://sg.finance.yahoo.com/portfolios/", "Yahoo Portfolio"],
-      ["https://www.tradingview.com/chart", "TradingView"]
+      ["https://docs.google.com/spreadsheets/d/1VylQGw-ucq-fkypk2a3IW_5GJ8whKcVE1yiUPUmUa7E/edit?gid=1242144670", "Opex and BigTix"]
   ]},
-  { title: "Global Income Fund", bookmarks: [
+  { title: "Sail Property & Global Income Fund", bookmarks: [
       ["https://docs.google.com/spreadsheets/d/1G985V27a1ZgdyhMgLRXrlAw6LuelfWeSVIYb-LWpZYw/edit?gid=744610044", "SAIL"],
       ["https://docs.google.com/spreadsheets/d/1AcqXREzpG3ZUJRDsyQAPhNPYrZZ0ZN68qjH9h1USdXc/edit?gid=1256529310", "SG REITS"],
       ["https://docs.google.com/spreadsheets/d/1qxhyjXMm-rFkP24akt-VI4NP9tX4wvRLTTxgCZQHuwI/edit?gid=1256529310", "GODSPED"],
@@ -235,6 +236,7 @@ const bookmarkGroups = [
       ["https://docs.google.com/spreadsheets/d/1Lp8FHudrVeuiIhPqqYJvn6aoqj4obHIPb1LVZsTiCaU/edit?gid=723408462", "LIFE"],
       ["https://docs.google.com/spreadsheets/d/1PZebfDw5_7qkuLb-toSVXtHnIKLf2qdAit2KT5PLPv4/edit?gid=905411831", "FaR"]
   ]}
+
 ];
 
 const container = document.getElementById("bookmarkContainer");
@@ -386,9 +388,6 @@ function updateTimes() {
 setInterval(updateTimes, 1000);
 updateTimes();
 
-
-
-
 // --- Countdown Tiles ---
 const specialItems = [
   { name: "SAIL <br> Rental Income", type: "monthly", day: 1 }, // adjust for change in tenancy agreement dates
@@ -489,8 +488,6 @@ function getNextDate(i) {
         x = nextEnd;
     }
     break;
-
-
 
     case "season": {
         const year = n.getFullYear();
@@ -659,7 +656,78 @@ function updateCountdowns(){
 }
 updateCountdowns();
 setInterval(updateCountdowns,600000);
+
+
+// --- Bookmarks2 Setup ---
+const bookmarkGroups2 = [
+  { title: "Current Narrative", bookmarks: [
+      ["https://www.businesstimes.com.sg/breaking-news", "Business Times"],
+      ["https://www.bloomberg.com/asia", "Bloomberg"],
+      ["https://www.ft.com/", "Financial Times"],
+      ["https://www.cnbc.com/world/?region=world&region=usa", "CNBC"]
+  ]},
+
+{ title: "Portfolio Valuations", bookmarks: [
+      ["https://sg.finance.yahoo.com/portfolios/", "Yahoo Portfolio"],
+      ["https://www.tradingview.com/chart", "TradingView"],
+      ["https://www.99.co/dashboard/property-value", "Sail #04-19"]
+  ]},
+  { title: "Metrics", bookmarks: [
+      ["https://www.barchart.com/etfs-funds/quotes/TQQQ/options?moneyness=allRows", "TQQQ Puts"],
+      ["https://www.barchart.com/etfs-funds/quotes/IBIT/options?moneyness=allRows", "IBIT Leaps"],
+      ["https://www.cmegroup.com/markets/interest-rates/cme-fedwatch-tool.html", "Fed Watch"]
+  ]},
+  { title: "Brokers", bookmarks: [
+      ["https://www.interactivebrokers.com.sg/sso/Login?RL=1&locale=en_US", "IBKR"],
+      ["https://www.poems.com.sg/", "POEMS"],
+      ["https://crypto.com/exchange/", "Crypto.com"],
+      ["https://secure.fundsupermart.com/fsm/account/login", "FSMOne"]
+  ]}
+
+];
+
+const container2 = document.getElementById("bookmarkContainer2");
+const genericFavicon = "/favicon-32x32.png"; // Your website's favicon in root
+
+bookmarkGroups2.forEach(group => {
+  // Create group title
+  const sep2 = document.createElement("div");
+  sep2.className = "separator";
+  sep2.innerHTML = `<span>${group.title}</span>`;
+  container2.appendChild(sep2);
+
+  // Create grid container
+  const grid2 = document.createElement("div");
+  grid2.className = "bookmark-grid";
+
+  group.bookmarks.forEach(([url, name]) => {
+    const a2 = document.createElement("a");
+    a2.href = url;
+    a2.target = "_blank";
+    a2.className = "bookmark";
+
+    const img2 = document.createElement("img");
+    // Use Google favicon service
+    img2.src = `https://www.google.com/s2/favicons?domain=${new URL(url).hostname}`;
+    img2.alt = name;
+    // Fallback to your site's favicon if failed
+    img2.onerror = () => {
+      img2.src = genericFavicon;
+    };
+
+    const span2 = document.createElement("span");
+    span2.textContent = name;
+
+    a2.appendChild(img2);
+    a2.appendChild(span2);
+    grid2.appendChild(a2);
+  });
+
+  container2.appendChild(grid2);
+});
+
+
+
 </script>
 </body>
 </html>
-
