@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Countdown Tiles - iPhone</title>
+<style>
+body {
+  font-family: Arial, sans-serif;
+  background: #4682B4;
+  margin: 0;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Countdown Grid */
+.countdown-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+  gap: 15px;
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.tile {
+  background: linear-gradient(145deg, #ffffff, #e3f2fd);
+  border-radius: 15px;
+  padding: 15px;
+  text-align: center;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+  transition: transform 0.2s, box-shadow 0.2s;
+  text-decoration: none;
+  color: #333;
+}
+
+.tile:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 28px rgba(0,0,0,0.2);
+}
+
+.tile .label {
+  font-weight: bold;
+  font-size: 16px;
+  margin-bottom: 8px;
+  color: #333;
+}
+
+.tile .countdownText, .tile .date-range, .tile .cycleText {
+  font-size: 12px;
+  color: #555;
+  margin-top: 4px;
+}
+
+.tile .progress-ring {
+  margin: 5px auto;
+  line-height: 0;
+}
+
+.tile span.dot {
+  width: 8px;
+  height: 8px;
+  display: inline-block;
+  margin: 1px;
+  border-radius: 2px;
+}
+</style>
+</head>
+<body>
+
+<h2 style="color:white;margin-bottom:10px;">Countdown Tiles</h2>
+
+<div id="specialCountdowns" class="countdown-grid"></div>
+
+<script>
+// --- Countdown Items with URLs ---
+const specialItems = [
+  { name: "SAIL - Rent & Tenancy", type: "monthly", day: 1, url: "https://docs.google.com/spreadsheets/d/1G985V27a1ZgdyhMgLRXrlAw6LuelfWeSVIYb-LWpZYw" },
+  { name: "SGP REITS - Dividends", type: "quarterly", months: [2,5,8,11], day: -1, url: "https://docs.google.com/spreadsheets/d/1AcqXREzpG3ZUJRDsyQAPhNPYrZZ0ZN68qjH9h1USdXc" },
+  { name: "GODSPED - Dividends", type: "quarterly", months: [2,5,8,11], day: -1, url: "https://docs.google.com/spreadsheets/d/1qxhyjXMm-rFkP24akt-VI4NP9tX4wvRLTTxgCZQHuwI" },
+  { name: "$PUTS - Options Trade", type: "nthWeekday", weekday: 5, nth: 3, url: "https://docs.google.com/spreadsheets/d/1M13JlDcU-y_4tGblzshoSoK7B2B3KMZC1elC1ApDem8" },
+  { name: "FaR - Seasonal Volatility Overlay", type: "season", start: {month:9, day:1}, end: {month:6, day:15}, specialEnd: {year:2026, month:0, day:1}, url: "https://docs.google.com/spreadsheets/d/1PZebfDw5_7qkuLb-toSVXtHnIKLf2qdAit2KT5PLPv4" },
+  { name: "LIFE - Collect & Compound", type: "semiannual", dates: [{month:5, day:15}, {month:11, day:15}], url: "https://docs.google.com/spreadsheets/d/1Lp8FHudrVeuiIhPqqYJvn6aoqj4obHIPb1LVZsTiCaU" }
+];
+
+// --- Helper Functions ---
+function fmtDate(d){ return d.toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'2-digit'}); }
+function daysBetween(a,b){ return Math.round((b-a)/86400000); }
+
+function getNextDate(i){
+  const n = new Date();
+  let x;
+  switch(i.type){
+    case "monthly":
+      x=new Date(n.getFullYear(), n.getMonth(), i.day);
+      if(n>=x) x.setMonth(x.getMonth()+1);
+      break;
+    case "quarterly":
+      let found=false;
+      for(let m of i.months){
+        let d = i.day===-1? new Date(n.getFullYear(), m+1, 0) : new Date(n.getFullYear(), m, i.day);
+        if(d>n){ x=d; found=true; break; }
+      }
+      if(!found) x = i.day===-1? new Date(n.getFullYear()+1, i.months[0]+1,0) : new Date(n.getFullYear()+1, i.months[0], i.day);
+      break;
+    case "nthWeekday":
+      let y=n.getFullYear(), mo=n.getMonth(), d=new Date(y, mo,1), c=0;
+      while(d.getMonth()===mo){
+        if(d.getDay()===i.weekday) c++;
+        if(c===i.nth && d>n){ x=new Date(d); break; }
+        d.setDate(d.getDate()+1);
+      }
+      if(!x){ mo++; d=new Date(y, mo,1); c=0;
+        while(d.getMonth()===mo){ if(d.getDay()===i.weekday)c++; if(c===i.nth){x=new Date(d); break;} d.setDate(d.getDate()+1);}}
+      break;
+    case "semiannual":
+      let nearest=null;
+      for(let d2 of i.dates){ let dt=new Date(n.getFullYear(), d2.month, d2.day); if(dt>n && (!nearest||dt<nearest)) nearest=dt;}
+      if(!nearest) nearest=new Date(n.getFullYear()+1, i.dates[0].month, i.dates[0].day);
+      x=nearest;
+      break;
+    case "season":
+      // FaR Seasonal logic with sub-periods
+      const year = n.getFullYear();
+      const periodStart = new Date(year, i.start.month, i.start.day);
+      const nextYear = year + 1;
+      const isSpecial = (nextYear - 2022)%4===0;
+      let periodEnd = new Date(nextYear, i.end.month, i.end.day);
+      if(isSpecial && periodStart.getMonth()===9){ // special year
+        periodEnd = new Date(nextYear, i.specialEnd.month, i.specialEnd.day);
+        if(n>=periodEnd) periodEnd = new Date(nextYear, 9, 1); // sub-period 1 Jan → 1 Oct
+      }
+      x = n<periodStart? periodStart : periodEnd;
+      break;
+  }
+  return x;
+}
+
+function getPrevDate(i,nx){
+  const p=new Date(nx);
+  switch(i.type){
+    case "monthly": p.setMonth(p.getMonth()-1); break;
+    case "quarterly": p.setMonth(p.getMonth()-3); break;
+    case "nthWeekday": p.setMonth(p.getMonth()-1); break;
+    case "semiannual": p.setMonth(p.getMonth()-6); break;
+    case "season": p.setFullYear(p.getFullYear()-1); p.setMonth(i.start.month); p.setDate(i.start.day); break;
+    default: p.setFullYear(p.getFullYear()-1);
+  }
+  return p;
+}
+
+// --- Create Countdown Tiles ---
+const cdContainer = document.getElementById("specialCountdowns");
+specialItems.forEach(i=>{
+  const link=document.createElement("a");
+  link.href = i.url || "#";
+  link.target="_blank";
+  link.className = "tile";
+  link.innerHTML = `<div class="label">${i.name}</div>
+    <div class="progress-ring">Loading...</div>
+    <div class="countdownText">Loading...</div>
+    <div class="date-range">...</div>
+    <div class="cycleText">...</div>`;
+  cdContainer.appendChild(link);
+  i._el = link;
+});
+
+// --- Update Countdown Dots ---
+function updateCountdowns(){
+  const n=new Date();
+  specialItems.forEach(i=>{
+    const nx=getNextDate(i), pv=getPrevDate(i,nx);
+    let totalDays = Math.min(100, Math.round((nx-pv)/86400000));
+    let remaining = Math.max(0, Math.round((nx-n)/86400000));
+    remaining = Math.min(remaining,totalDays);
+
+    const dots=[];
+    for(let j=0;j<totalDays;j++){
+      let color="green";
+      if(i.type==="season"){
+        if(remaining>30) color="green";
+        else if(remaining>10) color="orange";
+        else color="red";
+      } else {
+        if(remaining>=80) color="#2ecc71";
+        else if(remaining>=50) color="#ff9800";
+        else color="#e53935";
+      }
+      if(j>=remaining) color="lightgrey";
+      dots.push(`<span class="dot" style="background:${color}"></span>`);
+    }
+    const rows=[];
+    for(let r=0;r<Math.ceil(dots.length/10);r++) rows.push(dots.slice(r*10,r*10+10).join(''));
+    i._el.querySelector(".progress-ring").innerHTML = rows.join("<br>");
+    i._el.querySelector(".countdownText").textContent = `ETA: ${remaining} days`;
+    i._el.querySelector(".date-range").textContent = `${fmtDate(pv)} → ${fmtDate(nx)}`;
+    i._el.querySelector(".cycleText").textContent = `Period: ${daysBetween(pv,nx)} days`;
+  });
+}
+
+updateCountdowns();
+setInterval(updateCountdowns, 60000); // refresh every minute
+</script>
+
+</body>
+</html>
