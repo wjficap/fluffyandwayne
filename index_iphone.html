@@ -16,7 +16,7 @@ body {
 }
 
 /* --- Countdown Tiles Section --- */
-.countdown-grid {
+.countdown-grid, .bookmark-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
   gap: 18px;
@@ -25,7 +25,7 @@ body {
   margin: 10px auto 30px;
 }
 
-.tile {
+.tile, .bookmark {
   background: linear-gradient(145deg, #ffffff, #e3f2fd);
   border-radius: 15px;
   padding: 15px;
@@ -33,18 +33,14 @@ body {
   box-shadow: 0 8px 20px rgba(0,0,0,0.12);
   transition: transform 0.2s, box-shadow 0.2s;
   display: block;
-}
-.tile:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 12px 28px rgba(0,0,0,0.2);
-}
-a.tile {
   text-decoration: none;
   color: inherit;
 }
-a.tile:visited {
-  color: inherit;
+.tile:hover, .bookmark:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 28px rgba(0,0,0,0.2);
 }
+
 .tile .label {
   font-weight: bold;
   font-size: 17px;
@@ -83,6 +79,7 @@ a.tile:visited {
 .dot.orange { background: #ff9800; }
 .dot.red { background: #e53935; }
 
+/* --- Separator --- */
 .separator {
   width: 100%;
   max-width: 800px;
@@ -109,12 +106,28 @@ a.tile:visited {
   position: relative;
   z-index: 1;
 }
+
+/* --- Bookmarks --- */
+.bookmark img {
+  width: 32px;
+  height: 32px;
+  margin-bottom: 5px;
+}
+.bookmark span {
+  display: block;
+  font-size: 14px;
+  font-weight: 500;
+  color: #000;
+}
 </style>
 </head>
 <body>
 
 <h2 style="color:white;margin-bottom:10px;">Upcoming Events</h2>
 <div id="specialCountdowns" class="countdown-grid"></div>
+
+<h2 style="color:white;margin-bottom:10px;">Bookmarks</h2>
+<div id="bookmarkContainer2"></div>
 
 <script>
 function fmtDate(d) {
@@ -250,7 +263,6 @@ specialItems.forEach(i => {
   i._el = d;
 });
 
-// --- SORTED countdown update ---
 function updateCountdowns() {
   const n = new Date();
   const list = [];
@@ -298,6 +310,66 @@ function updateCountdowns() {
 
 updateCountdowns();
 setInterval(updateCountdowns, 600000);
+
+// --- Bookmarks2 Setup ---
+const bookmarkGroups2 = [
+  { title: "Valuations", bookmarks: [
+      ["https://sg.finance.yahoo.com/portfolios/", "Yahoo Portfolio"],
+      ["https://www.tradingview.com/chart", "TradingView"],
+      ["https://www.99.co/dashboard/property-value", "Sail"]
+  ]},
+  { title: "Metrics", bookmarks: [
+      ["https://www.barchart.com/etfs-funds/quotes/TQQQ/options?moneyness=allRows", "TQQQ Puts"],
+      ["https://www.barchart.com/etfs-funds/quotes/IBIT/options?moneyness=allRows", "IBIT Leaps"],
+      ["https://www.cmegroup.com/markets/interest-rates/cme-fedwatch-tool.html", "Fed Watch"]
+  ]},
+  { title: "Brokers", bookmarks: [
+      ["https://www.interactivebrokers.com.sg/sso/Login", "IBKR"],
+      ["https://www.poems.com.sg/", "POEMS"],
+      ["https://crypto.com/exchange/markets", "Crypto.com"],
+      ["https://secure.fundsupermart.com/fsm/account/login", "FSMOne"]
+  ]},
+  { title: "Narratives", bookmarks: [
+      ["https://www.businesstimes.com.sg/breaking-news", "Business Times"],
+      ["https://www.bloomberg.com/latest", "Bloomberg"],
+      ["https://www.ft.com/news-feed", "Financial Times"],
+      ["https://www.cnbc.com/world/", "CNBC"]
+  ]}
+];
+
+const container2 = document.getElementById("bookmarkContainer2");
+const genericFavicon = "/favicon-32x32.png"; // Your website's favicon in root
+
+bookmarkGroups2.forEach(group => {
+  const sep2 = document.createElement("div");
+  sep2.className = "separator";
+  sep2.innerHTML = `<span>${group.title}</span>`;
+  container2.appendChild(sep2);
+
+  const grid2 = document.createElement("div");
+  grid2.className = "bookmark-grid";
+
+  group.bookmarks.forEach(([url, name]) => {
+    const a2 = document.createElement("a");
+    a2.href = url;
+    a2.target = "_blank";
+    a2.className = "bookmark";
+
+    const img2 = document.createElement("img");
+    img2.src = `https://www.google.com/s2/favicons?domain=${new URL(url).hostname}`;
+    img2.alt = name;
+    img2.onerror = () => { img2.src = genericFavicon; };
+
+    const span2 = document.createElement("span");
+    span2.textContent = name;
+
+    a2.appendChild(img2);
+    a2.appendChild(span2);
+    grid2.appendChild(a2);
+  });
+
+  container2.appendChild(grid2);
+});
 </script>
 </body>
 </html>
