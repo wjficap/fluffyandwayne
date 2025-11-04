@@ -217,8 +217,6 @@ body {
   </div>
 </div>
 
-<!-- --- Bookmark Container --- -->
-<div id="bookmarkContainer"></div>
 
 <!-- --- Countdown Tiles Section --- -->
 <div class="separator"><span>Upcoming Events</span></div>
@@ -228,54 +226,6 @@ body {
 <div id="bookmarkContainer2"></div>
 
 <script>
-// --- Bookmarks Setup ---
-const bookmarkGroups = [
-  { title: "Dashboard", bookmarks: [
-      ["https://docs.google.com/spreadsheets/d/12Cp4o9yLMVKRsb57fNG-UYESj2huF5E2hg8iXI1W41A/edit?gid=0", "Total NAV"],
-      ["https://docs.google.com/spreadsheets/d/1VylQGw-ucq-fkypk2a3IW_5GJ8whKcVE1yiUPUmUa7E/edit?gid=1242144670", "Opex and BigTix"]
-  ]},
-  { title: "Sail & Global Income Fund (distributing)", bookmarks: [
-      ["https://docs.google.com/spreadsheets/d/1G985V27a1ZgdyhMgLRXrlAw6LuelfWeSVIYb-LWpZYw/edit?gid=744610044", "SAIL (closed)"],
-      ["https://docs.google.com/spreadsheets/d/1AcqXREzpG3ZUJRDsyQAPhNPYrZZ0ZN68qjH9h1USdXc/edit?gid=1256529310", "SREITS (closed)"],
-      ["https://docs.google.com/spreadsheets/d/1qxhyjXMm-rFkP24akt-VI4NP9tX4wvRLTTxgCZQHuwI/edit?gid=1256529310", "SPED (open)"],
-      ["https://docs.google.com/spreadsheets/d/1M13JlDcU-y_4tGblzshoSoK7B2B3KMZC1elC1ApDem8/edit?gid=1256529310", "$PUTS (cash)"]
-  ]},
-  { title: "The FaR Life (accumulating)", bookmarks: [
-      ["https://docs.google.com/spreadsheets/d/1PZebfDw5_7qkuLb-toSVXtHnIKLf2qdAit2KT5PLPv4/edit?gid=905411831", "FaR (closed)"],
-      ["https://docs.google.com/spreadsheets/d/1Lp8FHudrVeuiIhPqqYJvn6aoqj4obHIPb1LVZsTiCaU/edit?gid=723408462", "LIFE (closed)"]
-
-  ]}
-
-];
-
-const container = document.getElementById("bookmarkContainer");
-bookmarkGroups.forEach(group => {
-  const sep = document.createElement("div");
-  sep.className = "separator";
-  sep.innerHTML = `<span>${group.title}</span>`;
-  container.appendChild(sep);
-
-  const grid = document.createElement("div");
-  grid.className = "bookmark-grid";
-  group.bookmarks.forEach(([url, name]) => {
-    const a = document.createElement("a");
-    a.href = url;
-    a.target = "_blank";
-    a.className = "bookmark";
-
-    const img = document.createElement("img");
-    img.src = new URL("/favicon.ico", url).href;
-    img.alt = name;
-
-    const span = document.createElement("span");
-    span.textContent = name;
-
-    a.appendChild(img);
-    a.appendChild(span);
-    grid.appendChild(a);
-  });
-  container.appendChild(grid);
-});
 
 // --- Robust Market Times with Weekend Skip ---
 
@@ -679,22 +629,14 @@ setInterval(updateCountdowns, 600000);
 // --- Bookmarks2 Setup ---
 const bookmarkGroups2 = [
 
-{ title: "Valuations", bookmarks: [
-      ["https://sg.finance.yahoo.com/portfolios/", "Yahoo Portfolio"],
-      ["https://www.tradingview.com/chart", "TradingView"],
+    { title: "Valuations", bookmarks: [
       ["https://www.99.co/dashboard/property-value", "Sail"]
-  ]},
-  { title: "Metrics", bookmarks: [
+    ]},
+    { title: "Metrics", bookmarks: [
       ["https://www.barchart.com/etfs-funds/quotes/TQQQ/options?moneyness=allRows", "TQQQ Puts"],
       ["https://www.barchart.com/etfs-funds/quotes/IBIT/options?moneyness=allRows", "IBIT Leaps"],
       ["https://www.cmegroup.com/markets/interest-rates/cme-fedwatch-tool.html", "Fed Watch"]
-  ]},
-  { title: "Brokers", bookmarks: [
-      ["https://www.interactivebrokers.com.sg/sso/Login", "IBKR"],
-      ["https://www.poems.com.sg/", "POEMS"],
-      ["https://crypto.com/exchange/markets", "Crypto.com"],
-      ["https://secure.fundsupermart.com/fsm/account/login", "FSMOne"]
-  ]},
+    ]},
 
     { title: "Narratives", bookmarks: [
       ["https://www.businesstimes.com.sg/breaking-news", "Business Times"],
@@ -702,7 +644,7 @@ const bookmarkGroups2 = [
       ["https://www.ft.com/news-feed", "Financial Times"],
       ["https://wjficap.github.io/fluffyandwayne/cnbc.html", "CNBC"],
       ["https://www.removepaywall.com/search?url=https://www.economist.com/the-world-in-brief", "Economist"]
-  ]}
+    ]}
 
 ];
 
