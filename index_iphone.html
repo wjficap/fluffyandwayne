@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Funds (iPhone)</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<link rel="icon" href="favicon-32x32.png" type="image/png">
+<title>Funds - iPhone</title>
+
 <style>
 body {
   font-family: Arial, sans-serif;
@@ -13,64 +15,103 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  font-size: 14px; /* Slightly smaller base for mobile */
 }
+
+/* --- Market Times Section --- */
+.market-times {
+  display: flex;
+  flex-direction: column; /* Stack vertically for mobile */
+  gap: 15px;
+  margin-bottom: 30px;
+  width: 100%;
+  max-width: 350px; /* Limit width for iPhone */
+}
+.market {
+  background: linear-gradient(145deg, #ffffff, #e3f2fd);
+  padding: 15px; /* Smaller padding */
+  border-radius: 12px;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.market:active { /* Tap effect instead of hover */
+  transform: scale(0.98);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.18);
+}
+.market h3 {
+  margin: 0 0 8px 0;
+  font-size: 16px;
+  color: #333;
+}
+.market .time {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 4px;
+  color: #222;
+}
+.market .countdown {
+  font-size: 13px;
+  font-weight: 600;
+  color: #555;
+}
+.market.open .countdown { color: #2e7d32; }
+.market.closed .countdown { color: #ef6c00; }
+.market.holiday .countdown { color: #9e9e9e; }
 
 /* --- Countdown Tiles Section --- */
 .countdown-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-  gap: 18px;
+  display: flex;
+  flex-direction: column; /* Single column for mobile */
+  gap: 15px;
   width: 100%;
-  max-width: 800px;
-  margin: 10px auto 30px;
+  max-width: 350px;
+  margin: 0 auto 30px;
 }
-
 .tile {
   background: linear-gradient(145deg, #ffffff, #e3f2fd);
-  border-radius: 15px;
-  padding: 15px;
+  border-radius: 12px;
+  padding: 15px; /* Smaller padding */
   text-align: center;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.12);
   transition: transform 0.2s, box-shadow 0.2s;
-  display: block;
 }
-.tile:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 12px 28px rgba(0,0,0,0.2);
-}
-a.tile {
-  text-decoration: none;
-  color: inherit;
-}
-a.tile:visited {
-  color: inherit;
+.tile:active { /* Tap effect */
+  transform: scale(0.98);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.18);
 }
 .tile .label {
   font-weight: bold;
-  font-size: 17px;
+  font-size: 15px;
   margin-bottom: 8px;
-  color: #000;
+  color: #000000;
+  line-height: 1.3;
 }
 .tile .countdownText {
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 600;
   color: #3101ab;
-  margin-top: 6px;
-}
-.tile .date-range,
-.tile .cycleText {
-  font-size: 12px;
-  color: #000;
   margin-top: 4px;
 }
+.tile .date-range {
+  font-size: 12px;
+  color: #000000;
+  margin-top: 3px;
+}
+.tile .cycleText {
+  font-size: 12px;
+  color: #000000;
+  margin-top: 3px;
+}
 
-/* --- Dot Grid --- */
+/* --- Dot Grid Countdown --- */
 .dot-bar {
   display: grid;
-  grid-template-columns: repeat(10, 10px);
-  gap: 3px;
+  grid-template-columns: repeat(10, 10px); /* Smaller dots for mobile */
+  gap: 2px;
   justify-content: center;
-  margin-top: 10px;
+  margin-top: 8px;
 }
 .dot {
   width: 10px;
@@ -83,26 +124,69 @@ a.tile:visited {
 .dot.orange { background: #ff9800; }
 .dot.red { background: #e53935; }
 
+/* --- Bookmark Tiles --- */
+.bookmark-grid {
+  display: flex;
+  flex-direction: column; /* Single column for better touch on mobile */
+  gap: 12px;
+  width: 100%;
+  max-width: 350px;
+  margin: 0 auto 30px;
+}
+.bookmark {
+  background: white;
+  border-radius: 10px;
+  padding: 15px; /* Smaller padding */
+  text-align: center;
+  text-decoration: none;
+  color: #333;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  transition: transform 0.2s, box-shadow 0.2s;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 60px; /* Touch-friendly height */
+}
+.bookmark:active { /* Tap effect */
+  transform: scale(0.98);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.18);
+}
+.bookmark img {
+  max-width: 48px; /* Smaller icons */
+  max-height: 48px;
+  margin-bottom: 6px;
+}
+.bookmark span {
+  display: block;
+  font-weight: bold;
+  text-align: center;
+  font-size: 13px;
+  line-height: 1.2;
+}
+
+/* --- Separator --- */
 .separator {
   width: 100%;
-  max-width: 800px;
+  max-width: 350px;
   text-align: center;
-  margin: 25px 0 15px;
+  margin: 30px 0 15px;
   position: relative;
 }
+.separator:first-child { margin-top: 10px; }
 .separator::before, .separator::after {
   content: "";
   position: absolute;
   top: 50%;
-  width: 35%;
+  width: 35%; /* Adjusted for mobile */
   height: 2px;
   background: #ccc;
 }
 .separator::before { left: 0; }
 .separator::after { right: 0; }
 .separator span {
-  padding: 0 10px;
-  font-size: 18px;
+  padding: 0 8px;
+  font-size: 16px;
   font-weight: bold;
   color: #080808;
   background: #f4f4f9;
@@ -111,72 +195,351 @@ a.tile:visited {
 }
 </style>
 </head>
+
 <body>
 
-<h2 style="color:white;margin-bottom:10px;">Upcoming Events</h2>
+<!-- --- Market Times Section --- -->
+<div class="market-times">
+  <div class="market" id="nyse">
+    <h3>New York</h3>
+    <div class="time" id="ny-time">--:--:--</div>
+    <div class="countdown" id="ny-countdown">Loading...</div>
+  </div>
+  <div class="market" id="lse">
+    <h3>London</h3>
+    <div class="time" id="london-time">--:--:--</div>
+    <div class="countdown" id="lse-countdown">Loading...</div>
+  </div>
+  <div class="market" id="sgx">
+    <h3>Singapore</h3>
+    <div class="time" id="sg-time">--:--:--</div>
+    <div class="countdown" id="sg-countdown">Loading...</div>
+  </div>
+</div>
+
+<!-- --- Bookmark Container --- -->
+<div id="bookmarkContainer"></div>
+
+<!-- --- Countdown Tiles Section --- -->
+<div class="separator"><span>Upcoming Events</span></div>
 <div id="specialCountdowns" class="countdown-grid"></div>
 
+<!-- --- Bookmark Container2 --- -->
+<div id="bookmarkContainer2"></div>
+
 <script>
+// --- Bookmarks Setup ---
+const bookmarkGroups = [
+  { title: "Dashboard", bookmarks: [
+      ["https://docs.google.com/spreadsheets/d/12Cp4o9yLMVKRsb57fNG-UYESj2huF5E2hg8iXI1W41A/edit?gid=0", "Total NAV"],
+      ["https://docs.google.com/spreadsheets/d/1VylQGw-ucq-fkypk2a3IW_5GJ8whKcVE1yiUPUmUa7E/edit?gid=1242144670", "Opex and BigTix"]
+  ]},
+  { title: "Sail & Global Income Fund (distributing)", bookmarks: [
+      ["https://docs.google.com/spreadsheets/d/1G985V27a1ZgdyhMgLRXrlAw6LuelfWeSVIYb-LWpZYw/edit?gid=744610044", "SAIL (closed)"],
+      ["https://docs.google.com/spreadsheets/d/1AcqXREzpG3ZUJRDsyQAPhNPYrZZ0ZN68qjH9h1USdXc/edit?gid=1256529310", "SREITS (closed)"],
+      ["https://docs.google.com/spreadsheets/d/1qxhyjXMm-rFkP24akt-VI4NP9tX4wvRLTTxgCZQHuwI/edit?gid=1256529310", "SPED (open)"],
+      ["https://docs.google.com/spreadsheets/d/1M13JlDcU-y_4tGblzshoSoK7B2B3KMZC1elC1ApDem8/edit?gid=1256529310", "$PUTS (cash)"]
+  ]},
+  { title: "The FaR Life (accumulating)", bookmarks: [
+      ["https://docs.google.com/spreadsheets/d/1PZebfDw5_7qkuLb-toSVXtHnIKLf2qdAit2KT5PLPv4/edit?gid=905411831", "FaR (closed)"],
+      ["https://docs.google.com/spreadsheets/d/1Lp8FHudrVeuiIhPqqYJvn6aoqj4obHIPb1LVZsTiCaU/edit?gid=723408462", "LIFE (closed)"]
+
+  ]}
+
+];
+
+const container = document.getElementById("bookmarkContainer");
+bookmarkGroups.forEach(group => {
+  const sep = document.createElement("div");
+  sep.className = "separator";
+  sep.innerHTML = `<span>${group.title}</span>`;
+  container.appendChild(sep);
+
+  const grid = document.createElement("div");
+  grid.className = "bookmark-grid";
+  group.bookmarks.forEach(([url, name]) => {
+    const a = document.createElement("a");
+    a.href = url;
+    a.target = "_blank";
+    a.className = "bookmark";
+
+    const img = document.createElement("img");
+    img.src = new URL("/favicon.ico", url).href;
+    img.alt = name;
+
+    const span = document.createElement("span");
+    span.textContent = name;
+
+    a.appendChild(img);
+    a.appendChild(span);
+    grid.appendChild(a);
+  });
+  container.appendChild(grid);
+});
+
+// --- Robust Market Times with Weekend Skip ---
+
+// Get current date/time in a specific time zone
+function getTimeInTimeZone(timeZone) {
+  const now = new Date();
+
+  // Get the components in the target time zone
+  const parts = new Intl.DateTimeFormat('en-US', {
+    timeZone,
+    year: 'numeric', month: 'numeric', day: 'numeric',
+    hour: 'numeric', minute: 'numeric', second: 'numeric',
+    hour12: false
+  }).formatToParts(now);
+
+  const values = {};
+  parts.forEach(p => { values[p.type] = parseInt(p.value, 10); });
+
+  return new Date(
+    values.year, values.month - 1, values.day,
+    values.hour, values.minute, values.second
+  );
+}
+
+// Format time in a time zone for display
+function formatTime(timeZone) {
+  return new Intl.DateTimeFormat('en-US', { 
+    hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false, timeZone 
+  }).format(new Date());
+}
+
+// Get next open date, skipping weekends
+function getNextOpenDate(d, openHour, openMin) {
+  const nextOpen = new Date(d);
+  nextOpen.setHours(openHour, openMin, 0, 0);
+
+  do {
+    nextOpen.setDate(nextOpen.getDate() + 1);
+  } while (nextOpen.getDay() === 0 || nextOpen.getDay() === 6); // Skip Sunday(0) & Saturday(6)
+
+  return nextOpen;
+}
+
+// Calculate countdown until open/close
+function getCountdown(timeZone, openHour, openMin, closeHour, closeMin) {
+  const d = getTimeInTimeZone(timeZone);
+  const day = d.getDay();
+
+  const openTime = new Date(d);
+  openTime.setHours(openHour, openMin, 0, 0);
+
+  const closeTime = new Date(d);
+  closeTime.setHours(closeHour, closeMin, 0, 0);
+
+  let statusText = '', className = '';
+
+  if (day === 0 || day === 6) {
+    // Weekend: calculate next open
+    const nextOpen = getNextOpenDate(d, openHour, openMin);
+    const diff = nextOpen - d;
+    const h = Math.floor(diff / 3600000);
+    const m = Math.floor((diff % 3600000) / 60000);
+    statusText = `Opens in ${h}h ${m}m`;
+    className = 'holiday';
+  } else if (d < openTime) {
+    // Before market open
+    const diff = openTime - d;
+    const h = Math.floor(diff / 3600000);
+    const m = Math.floor((diff % 3600000) / 60000);
+    statusText = `Opens in ${h}h ${m}m`;
+    className = 'closed';
+  } else if (d >= openTime && d <= closeTime) {
+    // During market hours
+    const diff = closeTime - d;
+    const h = Math.floor(diff / 3600000);
+    const m = Math.floor((diff % 3600000) / 60000);
+    statusText = `Closes in ${h}h ${m}m`;
+    className = 'open';
+  } else {
+    // After market close: calculate next open
+    const nextOpen = getNextOpenDate(d, openHour, openMin);
+    const diff = nextOpen - d;
+    const h = Math.floor(diff / 3600000);
+    const m = Math.floor((diff % 3600000) / 60000);
+    statusText = `Opens in ${h}h ${m}m`;
+    className = 'closed';
+  }
+
+  return { statusText, className };
+}
+
+// Update UI
+function updateTimes() {
+  const markets = [
+    { idTime: 'ny-time', idCount: 'ny-countdown', tz: 'America/New_York', open:[9,30], close:[16,0] },
+    { idTime: 'london-time', idCount: 'lse-countdown', tz: 'Europe/London', open:[8,0], close:[16,30] },
+    { idTime: 'sg-time', idCount: 'sg-countdown', tz:'Asia/Singapore', open:[9,0], close:[17,0] }
+  ];
+
+  markets.forEach(m => {
+    const timeEl = document.getElementById(m.idTime);
+    const countdownEl = document.getElementById(m.idCount);
+    const marketCard = countdownEl.parentElement;
+
+    timeEl.textContent = formatTime(m.tz);
+
+    const { statusText, className } = getCountdown(
+      m.tz, m.open[0], m.open[1], m.close[0], m.close[1]
+    );
+
+    countdownEl.textContent = statusText;
+
+    marketCard.classList.remove('open','closed','holiday');
+    marketCard.classList.add(className);
+  });
+}
+
+// Update every second
+setInterval(updateTimes, 1000);
+updateTimes();
+
+// --- Countdown Tiles ---
+const specialItems = [
+  { name: "SAIL <br> Rental Income", type: "monthly", day: 1 }, // adjust for change in tenancy agreement dates
+  { name: "SREITS <br> Dividend Income", type: "quarterly", months: [2, 5, 8, 11], day: -1 },
+  { name: "SPED <br> Dividend Income", type: "quarterly", months: [2, 5, 8, 11], day: -1 },
+  { name: "$PUTS <br> Trading & Premium", type: "nthWeekday", weekday: 5, nth: 3 },
+  { name: "SAIL <br> Lease Expiry",
+    type: "tenancy",
+    start: { year: 2024, month: 1, day: 1 }, // 1 Feb 2025
+    years: 2 // 1-year tenancy
+  },
+  { name: "LIFE <br> Dividend Capital", type: "semiannual", dates: [{ month: 5, day: 15 }, { month: 11, day: 15 }] },
+
+  {
+    name: "FaR <br> Volatility Overlay",
+    type: "season",
+    start: { month: 9, day: 1 },
+    end: { month: 6, day: 15 }
+  }
+
+];
+
 function fmtDate(d) {
   return d.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: '2-digit' });
 }
+
 function daysBetween(a, b) {
   return Math.round((b - a) / 86400000);
 }
-
-const specialItems = [
-  { name: "SAIL <br> Rental Income", type: "monthly", day: 1, link: "https://docs.google.com/spreadsheets/d/1G985V27a1ZgdyhMgLRXrlAw6LuelfWeSVIYb-LWpZYw" },
-  { name: "SREITS <br> Dividend Income", type: "quarterly", months: [2,5,8,11], day: -1, link: "https://docs.google.com/spreadsheets/d/1AcqXREzpG3ZUJRDsyQAPhNPYrZZ0ZN68qjH9h1USdXc" },
-  { name: "SPED <br> Dividend Income", type: "quarterly", months: [2,5,8,11], day: -1, link: "https://docs.google.com/spreadsheets/d/1qxhyjXMm-rFkP24akt-VI4NP9tX4wvRLTTxgCZQHuwI" },
-  { name: "$PUTS <br> Trading & Premium", type: "nthWeekday", weekday: 5, nth: 3, link: "https://docs.google.com/spreadsheets/d/1M13JlDcU-y_4tGblzshoSoK7B2B3KMZC1elC1ApDem8" },
-  { name: "SAIL <br> Tenancy Status", type: "tenancy", start: {year:2024, month:1, day:1}, years:2, link: "https://docs.google.com/spreadsheets/d/1G985V27a1ZgdyhMgLRXrlAw6LuelfWeSVIYb-LWpZYw"  },
-  { name: "LIFE <br> Dividend Capital", type: "semiannual", dates: [{month:5, day:15}, {month:11, day:15}], link: "https://docs.google.com/spreadsheets/d/1Lp8FHudrVeuiIhPqqYJvn6aoqj4obHIPb1LVZsTiCaU"  },
-  { name: "FaR <br> Volatility Overlay", type: "season", start: {month:9, day:1}, end: {month:6, day:15}, link: "https://docs.google.com/spreadsheets/d/1PZebfDw5_7qkuLb-toSVXtHnIKLf2qdAit2KT5PLPv4"  }
-];
 
 function getNextDate(i) {
   const n = new Date();
   let x;
 
-  switch(i.type) {
+  switch (i.type) {
     case "monthly":
       x = new Date(n.getFullYear(), n.getMonth(), i.day);
       if (n >= x) x.setMonth(x.getMonth() + 1);
       break;
+
     case "quarterly":
       let found = false;
       for (let m of i.months) {
         let d = i.day === -1 ? new Date(n.getFullYear(), m + 1, 0) : new Date(n.getFullYear(), m, i.day);
-        if (d > n) { x = d; found = true; break; }
+        if (d > n) {
+          x = d;
+          found = true;
+          break;
+        }
       }
-      if (!found)
+      if (!found) {
         x = i.day === -1
           ? new Date(n.getFullYear() + 1, i.months[0] + 1, 0)
           : new Date(n.getFullYear() + 1, i.months[0], i.day);
+      }
       break;
+
     case "nthWeekday":
       let y = n.getFullYear(), mo = n.getMonth(), d = new Date(y, mo, 1), c = 0;
       while (d.getMonth() === mo) {
         if (d.getDay() === i.weekday) c++;
-        if (c === i.nth && d > n) { x = new Date(d); break; }
+        if (c === i.nth && d > n) {
+          x = new Date(d);
+          break;
+        }
         d.setDate(d.getDate() + 1);
       }
       if (!x) {
         mo++;
-        d = new Date(y, mo, 1); c = 0;
+        d = new Date(y, mo, 1);
+        c = 0;
         while (d.getMonth() === mo) {
           if (d.getDay() === i.weekday) c++;
-          if (c === i.nth) { x = new Date(d); break; }
+          if (c === i.nth) {
+            x = new Date(d);
+            break;
+          }
           d.setDate(d.getDate() + 1);
         }
       }
       break;
+
     case "tenancy":
-      const startDate = new Date(i.start.year, i.start.month, i.start.day);
-      const endDate = new Date(startDate);
-      endDate.setFullYear(startDate.getFullYear() + i.years);
-      if (n < endDate) x = endDate; else { endDate.setFullYear(endDate.getFullYear() + i.years); x = endDate; }
-      break;
+    const startDate = new Date(i.start.year, i.start.month, i.start.day);
+    const endDate = new Date(startDate);
+    endDate.setFullYear(startDate.getFullYear() + i.years);
+
+    if (n >= startDate && n < endDate) {
+        // We are within the current tenancy
+        x = endDate;
+    } else if (n < startDate) {
+        // Tenancy hasn’t started yet
+        x = endDate;
+    } else {
+        // Tenancy already ended → move to next cycle (if desired)
+        const nextEnd = new Date(endDate);
+        nextEnd.setFullYear(endDate.getFullYear() + i.years);
+        x = nextEnd;
+    }
+    break;
+
+    case "season": {
+        const year = n.getFullYear();
+        const nextYear = year + 1;
+        const isSpecialYear = (nextYear - 2022) % 4 === 0; // special years: 2022, 2026, 2030, ...
+
+        let periodStart, periodEnd;
+
+        if (isSpecialYear) {
+            // --- Special-year cycle (Oct → Jan → Oct) ---
+            const octStart = new Date(year, 9, 1);    // 1 Oct this year
+            const janNext = new Date(nextYear, 0, 1); // 1 Jan next year
+
+            if (n >= octStart && n < janNext) {
+            // Phase A: 1 Oct → 1 Jan
+            periodStart = octStart;
+            periodEnd = janNext;
+            } else {
+            // Phase B: 1 Jan → 1 Oct
+            const janStart = new Date(year, 0, 1);
+            const nextOct = new Date(year, 9, 1);
+            periodStart = janStart;
+            periodEnd = nextOct;
+            }
+        } else {
+            // --- Regular year: Oct → Jul ---
+            const octStart = new Date(year, 9, 1);
+            if (n < octStart) {
+            // Before October → still in previous cycle
+            periodStart = new Date(year - 1, 9, 1);
+            periodEnd = new Date(year, 6, 15); // 15 Jul current year
+            } else {
+            // After October → next July is the end
+            periodStart = octStart;
+            periodEnd = new Date(nextYear, 6, 15);
+            }
+        }
+
+        // The “next key date” for countdowns is the end of the current phase
+        x = periodEnd;
+        break;  
+        }
+
     case "semiannual":
       let c2 = null;
       for (let d2 of i.dates) {
@@ -186,59 +549,67 @@ function getNextDate(i) {
       if (!c2) c2 = new Date(n.getFullYear() + 1, i.dates[0].month, i.dates[0].day);
       x = c2;
       break;
-    case "season": {
-      const year = n.getFullYear();
-      const nextYear = year + 1;
-      const isSpecialYear = (nextYear - 2022) % 4 === 0;
-      let periodStart, periodEnd;
-      if (isSpecialYear) {
-        const octStart = new Date(year, 9, 1);
-        const janNext = new Date(nextYear, 0, 1);
-        if (n >= octStart && n < janNext) {
-          periodStart = octStart; periodEnd = janNext;
-        } else {
-          const janStart = new Date(year, 0, 1);
-          const nextOct = new Date(year, 9, 1);
-          periodStart = janStart; periodEnd = nextOct;
-        }
-      } else {
-        const octStart = new Date(year, 9, 1);
-        if (n < octStart) {
-          periodStart = new Date(year - 1, 9, 1);
-          periodEnd = new Date(year, 6, 15);
-        } else {
-          periodStart = octStart;
-          periodEnd = new Date(nextYear, 6, 15);
-        }
-      }
-      x = periodEnd;
-      break;
-    }
   }
+
   return x;
 }
 
 function getPrevDate(i, nx) {
   const p = new Date(nx);
-  switch(i.type) {
-    case "monthly": p.setMonth(p.getMonth() - 1); break;
-    case "quarterly": p.setMonth(p.getMonth() - 3); break;
-    case "nthWeekday": p.setMonth(p.getMonth() - 1); break;
-    case "tenancy": p.setFullYear(p.getFullYear() - i.years); break;
-    case "semiannual": p.setMonth(p.getMonth() - 6); break;
-    case "season": p.setFullYear(p.getFullYear() - 1); break;
+  switch (i.type) {
+    
+    case "monthly":
+      p.setMonth(p.getMonth() - 1);
+      break;
+    
+      case "quarterly":
+      p.setMonth(p.getMonth() - 3);
+      break;
+    
+      case "nthWeekday": {
+      // Find the 3rd Friday (or nth weekday) of the previous month
+      const prevMonth = p.getMonth() - 1;
+      const year = p.getFullYear() + (prevMonth < 0 ? -1 : 0);
+      const month = (prevMonth + 12) % 12;
+      
+      let d = new Date(year, month, 1);
+      let count = 0;
+      while (d.getMonth() === month) {
+        if (d.getDay() === i.weekday) count++;
+        if (count === i.nth) break;
+        d.setDate(d.getDate() + 1);
+      }
+
+      // Start date is the day *after* that 3rd Friday
+      d.setDate(d.getDate() + 1);
+      return d;
+    }
+
+    case "tenancy":
+      const prevStart = new Date(nx);
+      prevStart.setFullYear(prevStart.getFullYear() - i.years);
+      return prevStart;
+
+    case "semiannual":
+      p.setMonth(p.getMonth() - 6);
+      break;
+
+    case "season":
+      p.setFullYear(p.getFullYear() - 1);
+      p.setMonth(i.start.month);
+      p.setDate(i.start.day);
+      break;
+    default:
+      p.setFullYear(p.getFullYear() - 1);
   }
   return p;
 }
 
 const cdContainer = document.getElementById("specialCountdowns");
 
-// create tile elements
 specialItems.forEach(i => {
-  const d = document.createElement("a");
+  const d = document.createElement("div");
   d.className = "tile";
-  d.href = i.link || "#";
-  d.target = "_blank";
   d.innerHTML = `
     <div class="label">${i.name}</div>
     <div class="dot-bar"></div>
@@ -250,11 +621,12 @@ specialItems.forEach(i => {
   i._el = d;
 });
 
-// --- SORTED countdown update ---
+// --- Sorted Dot-grid countdown update (ascending ETA) ---
 function updateCountdowns() {
   const n = new Date();
   const list = [];
 
+  // Collect all countdown data first
   specialItems.forEach(i => {
     const nx = getNextDate(i), pv = getPrevDate(i, nx);
     const totalDays = daysBetween(pv, nx);
@@ -263,23 +635,25 @@ function updateCountdowns() {
     list.push({ item: i, nx, pv, totalDays, remaining });
   });
 
+  // Sort by ascending ETA
   list.sort((a, b) => a.remaining - b.remaining);
+
+  // Clear and re-append in order
   cdContainer.innerHTML = "";
 
-  list.forEach(obj => {
-    const i = obj.item;
-    const { nx, pv, totalDays, remaining } = obj;
+  list.forEach(({ item, nx, pv, totalDays, remaining }) => {
+    const i = item;
     const d = i._el;
-
     const maxDots = 100;
     const dotCount = Math.min(totalDays, maxDots);
     let remainingDots = remaining > maxDots ? maxDots : remaining;
+
     const bar = d.querySelector(".dot-bar");
     bar.innerHTML = "";
-    for (let x = 0; x < dotCount; x++) {
+    for (let j = 0; j < dotCount; j++) {
       const dot = document.createElement("div");
       dot.className = "dot";
-      if (x < remainingDots) {
+      if (j < remainingDots) {
         if (remainingDots <= 10) dot.classList.add("red");
         else if (remainingDots <= 30) dot.classList.add("orange");
         else dot.classList.add("green");
@@ -292,12 +666,88 @@ function updateCountdowns() {
     d.querySelector(".date-range").textContent = `${fmtDate(pv)} → ${fmtDate(nx)}`;
     d.querySelector(".cycleText").textContent = `Period: ${daysBetween(pv, nx)} days`;
 
+    // Re-append tile in sorted order
     cdContainer.appendChild(d);
   });
 }
 
 updateCountdowns();
 setInterval(updateCountdowns, 600000);
+
+
+
+// --- Bookmarks2 Setup ---
+const bookmarkGroups2 = [
+
+{ title: "Valuations", bookmarks: [
+      ["https://sg.finance.yahoo.com/portfolios/", "Yahoo Portfolio"],
+      ["https://www.tradingview.com/chart", "TradingView"],
+      ["https://www.99.co/dashboard/property-value", "Sail"]
+  ]},
+  { title: "Metrics", bookmarks: [
+      ["https://www.barchart.com/etfs-funds/quotes/TQQQ/options?moneyness=allRows", "TQQQ Puts"],
+      ["https://www.barchart.com/etfs-funds/quotes/IBIT/options?moneyness=allRows", "IBIT Leaps"],
+      ["https://www.cmegroup.com/markets/interest-rates/cme-fedwatch-tool.html", "Fed Watch"]
+  ]},
+  { title: "Brokers", bookmarks: [
+      ["https://www.interactivebrokers.com.sg/sso/Login", "IBKR"],
+      ["https://www.poems.com.sg/", "POEMS"],
+      ["https://crypto.com/exchange/markets", "Crypto.com"],
+      ["https://secure.fundsupermart.com/fsm/account/login", "FSMOne"]
+  ]},
+
+    { title: "Narratives", bookmarks: [
+      ["https://www.businesstimes.com.sg/breaking-news", "Business Times"],
+      ["https://www.bloomberg.com/latest", "Bloomberg"],
+      ["https://www.ft.com/news-feed", "Financial Times"],
+      ["https://wjficap.github.io/fluffyandwayne/cnbc.html", "CNBC"],
+      ["https://www.removepaywall.com/search?url=https://www.economist.com/the-world-in-brief", "Economist"]
+  ]}
+
+];
+
+const container2 = document.getElementById("bookmarkContainer2");
+const genericFavicon = "/favicon-32x32.png"; // Your website's favicon in root
+
+bookmarkGroups2.forEach(group => {
+  // Create group title
+  const sep2 = document.createElement("div");
+  sep2.className = "separator";
+  sep2.innerHTML = `<span>${group.title}</span>`;
+  container2.appendChild(sep2);
+
+  // Create grid container
+  const grid2 = document.createElement("div");
+  grid2.className = "bookmark-grid";
+
+  group.bookmarks.forEach(([url, name]) => {
+    const a2 = document.createElement("a");
+    a2.href = url;
+    a2.target = "_blank";
+    a2.className = "bookmark";
+
+    const img2 = document.createElement("img");
+    // Use Google favicon service
+    img2.src = `https://www.google.com/s2/favicons?domain=${new URL(url).hostname}`;
+    img2.alt = name;
+    // Fallback to your site's favicon if failed
+    img2.onerror = () => {
+      img2.src = genericFavicon;
+    };
+
+    const span2 = document.createElement("span");
+    span2.textContent = name;
+
+    a2.appendChild(img2);
+    a2.appendChild(span2);
+    grid2.appendChild(a2);
+  });
+
+  container2.appendChild(grid2);
+});
+
+
+
 </script>
 </body>
 </html>
