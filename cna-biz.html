@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ST-Business</title>
+<style>
+  body {
+    margin: 0;
+    font-family: "Consolas", "Menlo", "Monaco", monospace;
+    background-color: #000;  /* Black background */
+    color: #ff8c00;             /* White text */
+    padding: 20px 150px;      /* Give space from edges */
+    font-size: 1.2rem;  /* sets all text larger */
+  }
+
+  h1 {
+    color: #ff8c00;          /* Orange header */
+    margin-bottom: 20px;
+    font-size: 2rem;
+  }
+
+  ul {
+    list-style: none;        /* Remove bullets */
+    padding: 0;
+  }
+
+  li {
+    margin-bottom: 12px;
+    font-size: 2rem;
+    line-height: 1.4;
+  }
+
+  a, a:visited, a:hover, a:active {
+    color: #fff;          /* Orange links */
+    text-decoration: none;
+    font-size: 1.25rem;  /* sets all text larger */
+  }
+
+  a:hover {
+    text-decoration: underline;
+  }
+</style>
+</head>
+<body>
+
+<h1>ST-Business</h1>
+
+<ul id="news-list">
+  <!-- Headlines will appear here -->
+</ul>
+
+<!-- CNBC RSS feed via Bloople -->
+<script src="https://rss.bloople.net/?url=https%3A%2F%2Fwww.channelnewsasia.com%2Fapi%2Fv1%2Frss-outbound-feed%3F_format%3Dxml%26category%3D6936&showtitle=false&type=js"></script>
+<script>
+  // Populate the list with RSS headlines
+  window.addEventListener('load', () => {
+    const feed = document.querySelector('ul');
+    const bloopleFeed = document.querySelector('ul');
+    if (bloopleFeed) {
+      const newsList = document.getElementById('news-list');
+      bloopleFeed.querySelectorAll('a').forEach(link => {
+        const li = document.createElement('li');
+        const a = document.createElement('a');
+        a.href = link.href;
+        a.textContent = link.textContent;
+        a.target = "_blank";
+        li.appendChild(a);
+        newsList.appendChild(li);
+      });
+      bloopleFeed.remove();
+    }
+  });
+</script>
+
+</body>
+</html>
