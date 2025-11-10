@@ -3,75 +3,112 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CNA-Singapore</title>
+<title>CNBC Latest News</title>
 <style>
+  * { box-sizing: border-box; }
   body {
     margin: 0;
     font-family: "Consolas", "Menlo", "Monaco", monospace;
-    background-color: #000;  /* Black background */
-    color: #ff8c00;             /* White text */
-    padding: 20px 150px;      /* Give space from edges */
-    font-size: 1.2rem;  /* sets all text larger */
+    background-color: #000;
+    color: #ff8c00;
+    line-height: 1.5;
+  }
+
+  .container {
+    width: 100%;
+    margin: 0 auto;
+    padding: 20px 30px;              /* Default = perfect for iPhone / iPad */
+    max-width: 100%;
   }
 
   h1 {
-    color: #ff8c00;          /* Orange header */
-    margin-bottom: 20px;
-    font-size: 2rem;
+    color: #ff8c00;
+    font-size: 1.9rem;
+    margin: 0 0 1.5rem 0;
+    text-align: center;              /* Looks premium, never touches edges */
+    word-wrap: break-word;
   }
 
+  /* Bloople injects clean <ul><li><a>...</a></li></ul> */
   ul {
-    list-style: none;        /* Remove bullets */
+    list-style: none;
     padding: 0;
+    margin: 0;
   }
 
   li {
-    margin-bottom: 12px;
-    font-size: 2rem;
-    line-height: 1.4;
+    margin-bottom: 0.75rem;
   }
 
-  a, a:visited, a:hover, a:active {
-    color: #fff;          /* Orange links */
+  a, a:visited, a:active {
+    color: #ffffff;
     text-decoration: none;
-    font-size: 1.25rem;  /* sets all text larger */
+    font-size: 1.15rem;              /* Perfect readable size on iPhone (~18px) */
+    display: block;
+    border-radius: 10px;
+    overflow-wrap: break-word;
+    word-break: break-word;
+    transition: background 0.2s ease;
   }
 
   a:hover {
     text-decoration: underline;
+    background: rgba(255, 140, 0, 0.12);
+  }
+
+  a:active {
+    background: rgba(255, 140, 0, 0.22);
+  }
+
+  /* ─────── iPad (portrait & landscape) – a bit roomier ─────── */
+  @media (min-width: 768px) and (max-width: 1099px) {
+    .container { padding: 0px 30px; }
+    h1 { font-size: 2.1rem; }
+    a { font-size: 1.25rem;}
+  }
+
+  /* ─────── Desktop / large screens ≥1100px – EXACTLY like your original (150px sides + big text) ─────── */
+  @media (min-width: 1100px) {
+    .container {
+      padding: 20px 400px;           /* Your original dramatic black borders */
+    }
+    body {
+      font-size: 1.2rem;             /* Your original base size */
+    }
+    h1 {
+      font-size: 2rem;               /* Your original header */
+    }
+    a {
+      font-size: 1.25rem;            /* Your original link size */
+                   /* Closer to your original flat look */
+    }
+    li {
+      margin-bottom: 12px;           /* Your original spacing */
+      line-height: 1.4;
+    }
+    /* Optional: match your original even more (no background on hover) */
+    a:hover {
+      text-decoration: underline;
+      background: none;
+    }
   }
 </style>
 </head>
 <body>
 
-<h1>CNA-Singapore</h1>
+<div class="container">
+  <h1>Latest CNBC Headlines</h1>
 
-<ul id="news-list">
-  <!-- Headlines will appear here -->
-</ul>
-
-<!-- CNBC RSS feed via Bloople -->
-
-<script src="https://rss.bloople.net/?url=https%3A%2F%2Fwww.channelnewsasia.com%2Fapi%2Fv1%2Frss-outbound-feed%3F_format%3Dxml%26category%3D10416&showtitle=false&type=js"></script>
+  <!-- Bloople injects the feed inside .container → automatically gets correct padding -->
+  <script src="https://rss.bloople.net/?url=https%3A%2F%2Fwww.channelnewsasia.com%2Fapi%2Fv1%2Frss-outbound-feed%3F_format%3Dxml%26category%3D10416&showtitle=false&type=js"></script>
+</div>
 
 <script>
-  // Populate the list with RSS headlines
-  window.addEventListener('load', () => {
-    const feed = document.querySelector('ul');
-    const bloopleFeed = document.querySelector('ul');
-    if (bloopleFeed) {
-      const newsList = document.getElementById('news-list');
-      bloopleFeed.querySelectorAll('a').forEach(link => {
-        const li = document.createElement('li');
-        const a = document.createElement('a');
-        a.href = link.href;
-        a.textContent = link.textContent;
-        a.target = "_blank";
-        li.appendChild(a);
-        newsList.appendChild(li);
-      });
-      bloopleFeed.remove();
-    }
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.container a').forEach(link => {
+      link.target = '_blank';
+      link.rel = 'noopener noreferrer';
+    });
   });
 </script>
 
