@@ -448,29 +448,34 @@ function getNextDate(i) {
       break;
 
     case "nthWeekday":
-      let y = n.getFullYear(), mo = n.getMonth(), d = new Date(y, mo, 1), c = 0;
-      while (d.getMonth() === mo) {
-        if (d.getDay() === i.weekday) c++;
-        if (c === i.nth && d > n) {
-          x = new Date(d);
-          break;
-        }
-        d.setDate(d.getDate() + 1);
-      }
-      if (!x) {
-        mo++;
-        d = new Date(y, mo, 1);
-        c = 0;
+      // Helper to find nth weekday in a given month/year
+      function findNthInMonth(y, mo, weekday, nth) {
+        let d = new Date(y, mo, 1);
+        let c = 0;
         while (d.getMonth() === mo) {
-          if (d.getDay() === i.weekday) c++;
-          if (c === i.nth) {
-            x = new Date(d);
-            break;
+          if (d.getDay() === weekday) {
+            c++;
+            if (c === nth) return new Date(d);
           }
           d.setDate(d.getDate() + 1);
         }
+        return null;  // Won't happen for nth<=5
+      }
+
+      // Current month candidate
+      let candidate = findNthInMonth(n.getFullYear(), n.getMonth(), i.weekday, i.nth);
+      if (candidate && candidate > n) {
+        x = candidate;
+      } else {
+        // Rollover to next month (fix year too)
+        let nextMo = n.getMonth() + 1;
+        let nextY = n.getFullYear() + (nextMo > 11 ? 1 : 0);
+        nextMo = nextMo % 12;
+        x = findNthInMonth(nextY, nextMo, i.weekday, i.nth);
       }
       break;
+
+
 
     case "tenancy":
     const startDate = new Date(i.start.year, i.start.month, i.start.day);
