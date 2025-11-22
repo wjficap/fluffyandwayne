@@ -231,7 +231,7 @@ const bookmarkGroups = [
       ["https://docs.google.com/spreadsheets/d/1G985V27a1ZgdyhMgLRXrlAw6LuelfWeSVIYb-LWpZYw/edit?gid=744610044", "SAIL (closed) "],
       ["https://docs.google.com/spreadsheets/d/1bpSPWDO1smuk32ixBP6GaYJTAs8zZGJA5xBHf_Y_G0g/edit?gid=1256529310", "SREITS (closed)"],
       ["https://docs.google.com/spreadsheets/d/1qxhyjXMm-rFkP24akt-VI4NP9tX4wvRLTTxgCZQHuwI/edit?gid=1256529310", "GIF (open)"],
-      ["https://docs.google.com/spreadsheets/d/1M13JlDcU-y_4tGblzshoSoK7B2B3KMZC1elC1ApDem8/edit?gid=1256529310", "$PUTS (cash)"]
+      ["https://docs.google.com/spreadsheets/d/1M13JlDcU-y_4tGblzshoSoK7B2B3KMZC1elC1ApDem8/edit?gid=1256529310", "CPA (cash)"]
   ]},
   { title: "The FaR Life - for we live only in hope of a better age", bookmarks: [
       ["https://docs.google.com/spreadsheets/d/1PZebfDw5_7qkuLb-toSVXtHnIKLf2qdAit2KT5PLPv4/edit?gid=905411831", "FaR (closed)"],
@@ -395,7 +395,7 @@ const specialItems = [
   { name: "SAIL <br> Rental Income", type: "monthly", day: 1 }, // adjust for change in tenancy agreement dates
   { name: "SREITS <br> Dividend Income", type: "quarterly", months: [2, 5, 8, 11], day: -1 },
   { name: "GIF <br> Dividend Income", type: "quarterly", months: [2, 5, 8, 11], day: -1 },
-  { name: "$PUTS <br> Trading & Premium", type: "nthWeekday", weekday: 5, nth: 3 },
+  { name: "CPA <br> Trading & Premium", type: "nthWeekday", weekday: 5, nth: 3 },
   { name: "SAIL <br> Lease Expiry",
     type: "tenancy",
     start: { year: 2024, month: 1, day: 1 }, // 1 Feb 2025
@@ -679,7 +679,7 @@ const bookmarkGroups2 = [
   ]},
   { title: "Metrics", bookmarks: [
       ["https://www.barchart.com/etfs-funds/quotes/TQQQ/options?moneyness=allRows", "TQQQ Puts"],
-      ["https://www.barchart.com/etfs-funds/quotes/IBIT/options?moneyness=allRows", "IBIT Leaps"],
+//    ["https://www.barchart.com/etfs-funds/quotes/IBIT/options?moneyness=allRows", "IBIT Leaps"],
       ["https://marketchameleon.com/Overview/MINT/Dividends/", "MINT ex-Div"],
       ["https://www.cmegroup.com/markets/interest-rates/cme-fedwatch-tool.html", "Fed Watch"]
   ]},
@@ -690,15 +690,19 @@ const bookmarkGroups2 = [
       ["https://secure.fundsupermart.com/fsm/account/login", "FSMOne"]
   ]},
 
-    { title: "Narratives", bookmarks: [
-      ["https://www.businesstimes.com.sg/breaking-news", "Business Times"],
-      ["https://www.bloomberg.com/latest", "Bloomberg"],
-      ["https://www.ft.com/news-feed", "Financial Times"],
+    { title: "News", bookmarks: [
       ["https://wjficap.github.io/fluffyandwayne/cnbc.html", "CNBC"],
-      ["https://www.removepaywall.com/search?url=https://www.economist.com/the-world-in-brief", "Economist"]
+      ["https://wjficap.github.io/fluffyandwayne/wsj-world.html", "WSJ World"],
+      ["https://wjficap.github.io/fluffyandwayne/wsj-markets.html", "WSJ Markets"],
+      ["https://wjficap.github.io/fluffyandwayne/bb-markets.html", "Bloomberg Markets"]
+
+//      ["https://www.bloomberg.com/latest", "Bloomberg"],
+//      ["https://www.ft.com/news-feed", "Financial Times"],
+//      ["https://www.removepaywall.com/search?url=https://www.economist.com/the-world-in-brief", "Economist"]
   ]},
 
-    { title: "SGP", bookmarks: [
+    { title: "SG Media", bookmarks: [
+      ["https://www.businesstimes.com.sg/breaking-news", "Business Times"],
       ["https://wjficap.github.io/fluffyandwayne/st-biz.html", "ST-Business"],
       ["https://wjficap.github.io/fluffyandwayne/cna-biz.html", "CNA-Business"],
       ["https://wjficap.github.io/fluffyandwayne/st-sgp.html", "ST-Singapore"],
