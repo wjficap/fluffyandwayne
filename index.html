@@ -675,16 +675,15 @@ setInterval(updateCountdowns, 600000);
 
 
 // --- Bookmarks2 Setup ---
-const bookmarkGroups2 = [
 
-{ title: "Valuations", bookmarks: [
+const bookmarkGroups2 = [
+  { title: "Valuations", bookmarks: [
       ["https://sg.finance.yahoo.com/portfolios/", "Yahoo Portfolio"],
       ["https://www.tradingview.com/chart", "TradingView"],
       ["https://www.99.co/dashboard/property-value", "Sail"]
   ]},
   { title: "Metrics", bookmarks: [
       ["https://www.barchart.com/etfs-funds/quotes/TQQQ/options?moneyness=allRows", "TQQQ Puts"],
-//    ["https://www.barchart.com/etfs-funds/quotes/IBIT/options?moneyness=allRows", "IBIT Leaps"],
       ["https://marketchameleon.com/Overview/MINT/Dividends/", "MINT ex-Div"],
       ["https://www.cmegroup.com/markets/interest-rates/cme-fedwatch-tool.html", "Fed Watch"]
   ]},
@@ -694,39 +693,30 @@ const bookmarkGroups2 = [
       ["https://crypto.com/exchange/markets", "Crypto.com"],
       ["https://secure.fundsupermart.com/fsm/account/login", "FSMOne"]
   ]},
-
-    { title: "Global Markets", bookmarks: [
+  { title: "Global Markets", bookmarks: [
       ["https://wjficap.github.io/fluffyandwayne/cnbc.html", "CNBC"],
       ["https://wjficap.github.io/fluffyandwayne/wsj-world.html", "WSJ World"],
       ["https://wjficap.github.io/fluffyandwayne/wsj-markets.html", "WSJ Markets"],
       ["https://wjficap.github.io/fluffyandwayne/wsj-economy.html", "WSJ Economy"],
       ["https://wjficap.github.io/fluffyandwayne/bb-markets.html", "Bloomberg Markets"]
-
-//      ["https://www.bloomberg.com/latest", "Bloomberg"],
-//      ["https://www.ft.com/news-feed", "Financial Times"],
-//      ["https://www.removepaywall.com/search?url=https://www.economist.com/the-world-in-brief", "Economist"]
   ]},
-
-    { title: "SG Business", bookmarks: [
+  { title: "SG Business", bookmarks: [
       ["https://www.businesstimes.com.sg/breaking-news", "BT-Breaking"],
       ["https://wjficap.github.io/fluffyandwayne/st-biz.html", "ST-Business"],
       ["https://wjficap.github.io/fluffyandwayne/cna-biz.html", "CNA-Business"],
       ["https://wjficap.github.io/fluffyandwayne/bt-biz.html", "BT-Business"],
       ["https://wjficap.github.io/fluffyandwayne/bt-ppty.html", "BT-Property"]
   ]},
-
-    { title: "SG Local", bookmarks: [
+  { title: "SG Local", bookmarks: [
       ["https://wjficap.github.io/fluffyandwayne/st-sgp.html", "ST-Singapore"],
       ["https://wjficap.github.io/fluffyandwayne/cna-sgp.html", "CNA-Singapore"],
       ["https://wjficap.github.io/fluffyandwayne/bt-sgp.html", "BT-Singapore"],
       ["https://wjficap.github.io/fluffyandwayne/bt-wealth.html", "BT-Wealth"]
-
   ]}
-
 ];
 
 const container2 = document.getElementById("bookmarkContainer2");
-const genericFavicon = "/favicon-32x32.png"; // Your website's favicon in root
+const genericFavicon = "/favicon-32x32.png"; // fallback favicon
 
 bookmarkGroups2.forEach(group => {
   // Create group title
@@ -734,6 +724,17 @@ bookmarkGroups2.forEach(group => {
   sep2.className = "separator";
   sep2.innerHTML = `<span>${group.title}</span>`;
   container2.appendChild(sep2);
+
+  // Create "Open All" button
+  const openAllBtn = document.createElement("button");
+  openAllBtn.textContent = "Open All";
+  openAllBtn.className = "open-all-btn";
+  openAllBtn.onclick = () => {
+    group.bookmarks.forEach(([url]) => {
+      window.open(url, "_blank");
+    });
+  };
+  container2.appendChild(openAllBtn);
 
   // Create grid container
   const grid2 = document.createElement("div");
@@ -746,13 +747,9 @@ bookmarkGroups2.forEach(group => {
     a2.className = "bookmark";
 
     const img2 = document.createElement("img");
-    // Use Google favicon service
     img2.src = `https://www.google.com/s2/favicons?domain=${new URL(url).hostname}`;
     img2.alt = name;
-    // Fallback to your site's favicon if failed
-    img2.onerror = () => {
-      img2.src = genericFavicon;
-    };
+    img2.onerror = () => { img2.src = genericFavicon; };
 
     const span2 = document.createElement("span");
     span2.textContent = name;
@@ -764,10 +761,10 @@ bookmarkGroups2.forEach(group => {
 
   container2.appendChild(grid2);
 });
-
-
-
 </script>
+
+
+
 </body>
 </html>
 
