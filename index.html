@@ -213,12 +213,14 @@ body {
 <!-- --- Bookmark Container --- -->
 <div id="bookmarkContainer"></div>
 
+<!-- --- Bookmark Container2 --- -->
+<div id="bookmarkContainer2"></div>
+
 <!-- --- Countdown Tiles Section --- -->
 <div class="separator"><span>Upcoming Events</span></div>
 <div id="specialCountdowns" class="countdown-grid"></div>
 
-<!-- --- Bookmark Container2 --- -->
-<div id="bookmarkContainer2"></div>
+
 
 <script>
 // --- Bookmarks Setup ---
@@ -242,8 +244,6 @@ const bookmarkGroups = [
   ]}
 
 ];
-
-
 
 const container = document.getElementById("bookmarkContainer");
 bookmarkGroups.forEach(group => {
@@ -273,6 +273,100 @@ bookmarkGroups.forEach(group => {
   });
   container.appendChild(grid);
 });
+
+
+
+// --- Bookmarks2 Setup ---
+
+const bookmarkGroups2 = [
+  
+  { title: "Global News (Text Mode)", bookmarks: [
+      ["https://wjficap.github.io/fluffyandwayne/cnbc.html", "CNBC"],
+      ["https://wjficap.github.io/fluffyandwayne/wsj-world.html", "WSJ World"],
+      ["https://wjficap.github.io/fluffyandwayne/wsj-markets.html", "WSJ Markets"],
+      ["https://wjficap.github.io/fluffyandwayne/wsj-economy.html", "WSJ Economy"],
+      ["https://wjficap.github.io/fluffyandwayne/bb-markets.html", "Bloomberg Markets"]
+  ]},
+  { title: "Local Business News (Text Mode)", bookmarks: [
+      ["https://www.businesstimes.com.sg/breaking-news", "BT-Breaking (Webpage + Ads)"],
+      ["https://wjficap.github.io/fluffyandwayne/bt-biz.html", "BT-Business"],
+      ["https://wjficap.github.io/fluffyandwayne/bt-ppty.html", "BT-Property"],
+      ["https://wjficap.github.io/fluffyandwayne/st-biz.html", "ST-Business"],
+      ["https://wjficap.github.io/fluffyandwayne/cna-biz.html", "CNA-Business"]
+  ]},
+  { title: "Local News (Text Mode)", bookmarks: [
+      ["https://wjficap.github.io/fluffyandwayne/st-sgp.html", "ST-Singapore"],
+      ["https://wjficap.github.io/fluffyandwayne/cna-sgp.html", "CNA-Singapore"],
+      ["https://wjficap.github.io/fluffyandwayne/bt-sgp.html", "BT-Singapore"],
+      ["https://wjficap.github.io/fluffyandwayne/bt-wealth.html", "BT-Wealth"]
+  ]}, 
+  
+  { title: "Valuations", bookmarks: [
+      ["https://sg.finance.yahoo.com/portfolios/", "Yahoo Portfolio"],
+      ["https://www.tradingview.com/chart", "TradingView"],
+      ["https://www.99.co/dashboard/property-value", "Sail"]
+  ]},
+  { title: "Metrics", bookmarks: [
+      ["https://www.barchart.com/etfs-funds/quotes/TQQQ/options?moneyness=allRows", "TQQQ Puts"],
+      ["https://marketchameleon.com/Overview/MINT/Dividends/", "MINT ex-Div"],
+      ["https://www.cmegroup.com/markets/interest-rates/cme-fedwatch-tool.html", "Fed Watch"]
+  ]},
+  { title: "Brokers", bookmarks: [
+      ["https://www.interactivebrokers.com.sg/sso/Login", "IBKR"],
+      ["https://www.poems.com.sg/", "POEMS"],
+      ["https://crypto.com/exchange/markets", "Crypto.com"],
+      ["https://secure.fundsupermart.com/fsm/account/login", "FSMOne"]
+  ]}
+
+];
+
+const container2 = document.getElementById("bookmarkContainer2");
+const genericFavicon = "/favicon-32x32.png"; // fallback favicon
+
+bookmarkGroups2.forEach(group => {
+  // Create group title
+  const sep2 = document.createElement("div");
+  sep2.className = "separator";
+  sep2.innerHTML = `<span>${group.title}</span>`;
+  container2.appendChild(sep2);
+
+  // Create "Open All" button
+  const openAllBtn = document.createElement("button");
+  openAllBtn.textContent = "Open All";
+  openAllBtn.className = "open-all-btn";
+  openAllBtn.onclick = () => {
+    group.bookmarks.forEach(([url]) => {
+      window.open(url, "_blank");
+    });
+  };
+  container2.appendChild(openAllBtn);
+
+  // Create grid container
+  const grid2 = document.createElement("div");
+  grid2.className = "bookmark-grid";
+
+  group.bookmarks.forEach(([url, name]) => {
+    const a2 = document.createElement("a");
+    a2.href = url;
+    a2.target = "_blank";
+    a2.className = "bookmark";
+
+    const img2 = document.createElement("img");
+    img2.src = `https://www.google.com/s2/favicons?domain=${new URL(url).hostname}`;
+    img2.alt = name;
+    img2.onerror = () => { img2.src = genericFavicon; };
+
+    const span2 = document.createElement("span");
+    span2.textContent = name;
+
+    a2.appendChild(img2);
+    a2.appendChild(span2);
+    grid2.appendChild(a2);
+  });
+
+  container2.appendChild(grid2);
+});
+
 
 // --- Robust Market Times with Weekend Skip ---
 
@@ -677,97 +771,6 @@ updateCountdowns();
 setInterval(updateCountdowns, 600000);
 
 
-
-// --- Bookmarks2 Setup ---
-
-const bookmarkGroups2 = [
-  
-  { title: "Global News (Text Mode)", bookmarks: [
-      ["https://wjficap.github.io/fluffyandwayne/cnbc.html", "CNBC"],
-      ["https://wjficap.github.io/fluffyandwayne/wsj-world.html", "WSJ World"],
-      ["https://wjficap.github.io/fluffyandwayne/wsj-markets.html", "WSJ Markets"],
-      ["https://wjficap.github.io/fluffyandwayne/wsj-economy.html", "WSJ Economy"],
-      ["https://wjficap.github.io/fluffyandwayne/bb-markets.html", "Bloomberg Markets"]
-  ]},
-  { title: "Local Business News (Text Mode)", bookmarks: [
-      ["https://www.businesstimes.com.sg/breaking-news", "BT-Breaking (Webpage + Ads)"],
-      ["https://wjficap.github.io/fluffyandwayne/bt-biz.html", "BT-Business"],
-      ["https://wjficap.github.io/fluffyandwayne/bt-ppty.html", "BT-Property"],
-      ["https://wjficap.github.io/fluffyandwayne/st-biz.html", "ST-Business"],
-      ["https://wjficap.github.io/fluffyandwayne/cna-biz.html", "CNA-Business"]
-  ]},
-  { title: "Local News (Text Mode)", bookmarks: [
-      ["https://wjficap.github.io/fluffyandwayne/st-sgp.html", "ST-Singapore"],
-      ["https://wjficap.github.io/fluffyandwayne/cna-sgp.html", "CNA-Singapore"],
-      ["https://wjficap.github.io/fluffyandwayne/bt-sgp.html", "BT-Singapore"],
-      ["https://wjficap.github.io/fluffyandwayne/bt-wealth.html", "BT-Wealth"]
-  ]}, 
-  
-  { title: "Valuations", bookmarks: [
-      ["https://sg.finance.yahoo.com/portfolios/", "Yahoo Portfolio"],
-      ["https://www.tradingview.com/chart", "TradingView"],
-      ["https://www.99.co/dashboard/property-value", "Sail"]
-  ]},
-  { title: "Metrics", bookmarks: [
-      ["https://www.barchart.com/etfs-funds/quotes/TQQQ/options?moneyness=allRows", "TQQQ Puts"],
-      ["https://marketchameleon.com/Overview/MINT/Dividends/", "MINT ex-Div"],
-      ["https://www.cmegroup.com/markets/interest-rates/cme-fedwatch-tool.html", "Fed Watch"]
-  ]},
-  { title: "Brokers", bookmarks: [
-      ["https://www.interactivebrokers.com.sg/sso/Login", "IBKR"],
-      ["https://www.poems.com.sg/", "POEMS"],
-      ["https://crypto.com/exchange/markets", "Crypto.com"],
-      ["https://secure.fundsupermart.com/fsm/account/login", "FSMOne"]
-  ]}
-
-];
-
-const container2 = document.getElementById("bookmarkContainer2");
-const genericFavicon = "/favicon-32x32.png"; // fallback favicon
-
-bookmarkGroups2.forEach(group => {
-  // Create group title
-  const sep2 = document.createElement("div");
-  sep2.className = "separator";
-  sep2.innerHTML = `<span>${group.title}</span>`;
-  container2.appendChild(sep2);
-
-  // Create "Open All" button
-  const openAllBtn = document.createElement("button");
-  openAllBtn.textContent = "Open All";
-  openAllBtn.className = "open-all-btn";
-  openAllBtn.onclick = () => {
-    group.bookmarks.forEach(([url]) => {
-      window.open(url, "_blank");
-    });
-  };
-  container2.appendChild(openAllBtn);
-
-  // Create grid container
-  const grid2 = document.createElement("div");
-  grid2.className = "bookmark-grid";
-
-  group.bookmarks.forEach(([url, name]) => {
-    const a2 = document.createElement("a");
-    a2.href = url;
-    a2.target = "_blank";
-    a2.className = "bookmark";
-
-    const img2 = document.createElement("img");
-    img2.src = `https://www.google.com/s2/favicons?domain=${new URL(url).hostname}`;
-    img2.alt = name;
-    img2.onerror = () => { img2.src = genericFavicon; };
-
-    const span2 = document.createElement("span");
-    span2.textContent = name;
-
-    a2.appendChild(img2);
-    a2.appendChild(span2);
-    grid2.appendChild(a2);
-  });
-
-  container2.appendChild(grid2);
-});
 </script>
 
 
