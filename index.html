@@ -243,6 +243,8 @@ const bookmarkGroups = [
 
 ];
 
+
+
 const container = document.getElementById("bookmarkContainer");
 bookmarkGroups.forEach(group => {
   const sep = document.createElement("div");
@@ -679,6 +681,28 @@ setInterval(updateCountdowns, 600000);
 // --- Bookmarks2 Setup ---
 
 const bookmarkGroups2 = [
+  
+  { title: "Global News (Text Mode)", bookmarks: [
+      ["https://wjficap.github.io/fluffyandwayne/cnbc.html", "CNBC"],
+      ["https://wjficap.github.io/fluffyandwayne/wsj-world.html", "WSJ World"],
+      ["https://wjficap.github.io/fluffyandwayne/wsj-markets.html", "WSJ Markets"],
+      ["https://wjficap.github.io/fluffyandwayne/wsj-economy.html", "WSJ Economy"],
+      ["https://wjficap.github.io/fluffyandwayne/bb-markets.html", "Bloomberg Markets"]
+  ]},
+  { title: "Local Business News (Text Mode)", bookmarks: [
+      ["https://www.businesstimes.com.sg/breaking-news", "BT-Breaking (Webpage + Ads)"],
+      ["https://wjficap.github.io/fluffyandwayne/bt-biz.html", "BT-Business"],
+      ["https://wjficap.github.io/fluffyandwayne/bt-ppty.html", "BT-Property"],
+      ["https://wjficap.github.io/fluffyandwayne/st-biz.html", "ST-Business"],
+      ["https://wjficap.github.io/fluffyandwayne/cna-biz.html", "CNA-Business"]
+  ]},
+  { title: "Local News (Text Mode)", bookmarks: [
+      ["https://wjficap.github.io/fluffyandwayne/st-sgp.html", "ST-Singapore"],
+      ["https://wjficap.github.io/fluffyandwayne/cna-sgp.html", "CNA-Singapore"],
+      ["https://wjficap.github.io/fluffyandwayne/bt-sgp.html", "BT-Singapore"],
+      ["https://wjficap.github.io/fluffyandwayne/bt-wealth.html", "BT-Wealth"]
+  ]}, 
+  
   { title: "Valuations", bookmarks: [
       ["https://sg.finance.yahoo.com/portfolios/", "Yahoo Portfolio"],
       ["https://www.tradingview.com/chart", "TradingView"],
@@ -694,27 +718,8 @@ const bookmarkGroups2 = [
       ["https://www.poems.com.sg/", "POEMS"],
       ["https://crypto.com/exchange/markets", "Crypto.com"],
       ["https://secure.fundsupermart.com/fsm/account/login", "FSMOne"]
-  ]},
-  { title: "Global Markets", bookmarks: [
-      ["https://wjficap.github.io/fluffyandwayne/cnbc.html", "CNBC"],
-      ["https://wjficap.github.io/fluffyandwayne/wsj-world.html", "WSJ World"],
-      ["https://wjficap.github.io/fluffyandwayne/wsj-markets.html", "WSJ Markets"],
-      ["https://wjficap.github.io/fluffyandwayne/wsj-economy.html", "WSJ Economy"],
-      ["https://wjficap.github.io/fluffyandwayne/bb-markets.html", "Bloomberg Markets"]
-  ]},
-  { title: "SG Business", bookmarks: [
-      ["https://www.businesstimes.com.sg/breaking-news", "BT-Breaking"],
-      ["https://wjficap.github.io/fluffyandwayne/st-biz.html", "ST-Business"],
-      ["https://wjficap.github.io/fluffyandwayne/cna-biz.html", "CNA-Business"],
-      ["https://wjficap.github.io/fluffyandwayne/bt-biz.html", "BT-Business"],
-      ["https://wjficap.github.io/fluffyandwayne/bt-ppty.html", "BT-Property"]
-  ]},
-  { title: "SG Local", bookmarks: [
-      ["https://wjficap.github.io/fluffyandwayne/st-sgp.html", "ST-Singapore"],
-      ["https://wjficap.github.io/fluffyandwayne/cna-sgp.html", "CNA-Singapore"],
-      ["https://wjficap.github.io/fluffyandwayne/bt-sgp.html", "BT-Singapore"],
-      ["https://wjficap.github.io/fluffyandwayne/bt-wealth.html", "BT-Wealth"]
   ]}
+
 ];
 
 const container2 = document.getElementById("bookmarkContainer2");
