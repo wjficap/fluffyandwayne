@@ -22,6 +22,7 @@ body {
         font-weight: bold;
 } 
 
+
 /* --- Spreadsheet Container --- */
 .sheet-container {
   width: 50%;
@@ -50,37 +51,48 @@ body {
   flex-wrap: wrap;
 }
 .market {
-  background: linear-gradient(145deg, #ffffff, #e3f2fd);
   padding: 20px 25px;
   border-radius: 15px;
   width: 200px;
   text-align: center;
   box-shadow: 0 8px 20px rgba(0,0,0,0.12);
-  transition: transform 0.2s, box-shadow 0.2s;
+  transition: transform 0.2s, box-shadow 0.2s, background-color 0.5s ease;
 }
 .market:hover {
   transform: translateY(-5px);
   box-shadow: 0 12px 28px rgba(0,0,0,0.2);
 }
+
+/* Day time / Market is Open (Yellow background, dark text) */
+.market.open {
+  background: #fef08a;
+}
+.market.open h3 { color: #1e293b; }
+.market.open .time { color: #0f172a; }
+.market.open .countdown { color: #166534; }
+
+/* Night time / Market is Closed or Holiday (Grey background, light text) */
+.market.closed, .market.holiday {
+  background: #334155;
+}
+.market.closed h3, .market.holiday h3 { color: #cbd5e1; }
+.market.closed .time, .market.holiday .time { color: #f8fafc; }
+.market.closed .countdown { color: #f97316; }
+.market.holiday .countdown { color: #94a3b8; }
+
 .market h3 {
   margin: 0 0 12px 0;
   font-size: 20px;
-  color: #333;
 }
 .market .time {
   font-size: 24px;
   font-weight: 700;
   margin-bottom: 6px;
-  color: #222;
 }
 .market .countdown {
   font-size: 15px;
   font-weight: 600;
-  color: #555;
 }
-.market.open .countdown { color: #2e7d32; }
-.market.closed .countdown { color: #ef6c00; }
-.market.holiday .countdown { color: #9e9e9e; }
 
 /* --- Bookmark Tiles --- */
 .bookmark-grid {
@@ -152,7 +164,6 @@ body {
 
 <body>
 
-<!-- --- Market Times Section --- -->
 <div class="market-times">
   <div class="market" id="nyse">
     <h3>New York</h3>
@@ -171,10 +182,8 @@ body {
   </div>
 </div>
 
-<!-- --- Bookmark Container (Overview, Distributive, Accumulative) --- -->
 <div id="bookmarkContainer"></div>
 
-<!-- --- Bookmark Container 2 (Global News) --- -->
 <div id="bookmarkContainer2"></div>
 
 
@@ -259,15 +268,16 @@ bookmarkGroups.forEach(group => {
 // ==================== BOOKMARKS 2 ====================
 const bookmarkGroups2 = [
   { title: "Global News", bookmarks: [
-
-      ["https://www.cnbc.com/world/?region=world&region=usa", "CNBC"],
+      ["https://www.livehdtv.com/bloomberg/", "Bloomberg TV"],
+      ["https://www.ft.com/asia", "FT"],
       ["https://www.bloomberg.com/asia", "Bloomberg"],
-      ["https://www.livehdtv.com/bloomberg/", "Bloomberg TV"]
+      ["https://www.cnbc.com/world/?region=world&region=usa", "CNBC"],
   ]},
-  { title: "Local Papers (Webpage)", bookmarks: [
-      ["https://www.businesstimes.com.sg/breaking-news", "BT-Breaking"],
+  { title: "Local Papers", bookmarks: [
+      ["https://www.channelnewsasia.com/singapore", "CNA-Singapore"],
       ["https://www.straitstimes.com/breaking-news", "ST-Breaking"],
-      ["https://www.channelnewsasia.com/singapore", "CNA-Singapore"]
+      ["https://www.businesstimes.com.sg/breaking-news", "BT-Breaking"]
+
   ]}
 ];
 
@@ -331,9 +341,11 @@ function formatTime(timeZone) {
 }
 
 function getNextOpenDate(d, openHour, openMin) {
-  const nextOpen = new Date(d);
-  nextOpen.setHours(openHour, openMin, 0, 0);
-  do { nextOpen.setDate(nextOpen.getDate() + 1); } while (nextOpen.getDay() === 0 || nextOpen.getDay() === 6);
+  const nextOpen = new Date(d.getFullYear(), d.getMonth(), d.getDate(), openHour, openMin, 0, 0);
+  
+  if (d.getDay() === 0 || d.getDay() === 6 || d >= nextOpen) {
+    do { nextOpen.setDate(nextOpen.getDate() + 1); } while (nextOpen.getDay() === 0 || nextOpen.getDay() === 6);
+  }
   return nextOpen;
 }
 
