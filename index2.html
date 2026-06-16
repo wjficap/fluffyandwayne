@@ -142,8 +142,8 @@ body {
   padding: 0 10px;
   font-size: 18px;
   font-weight: bold;
-  color: orange;
-  background: black;
+  color: #ffae00;
+  background: rgb(0, 0, 0);
   position: relative;
   z-index: 1;
 }
@@ -186,7 +186,7 @@ const bookmarkGroups = [
       ["https://docs.google.com/spreadsheets/d/1VylQGw-ucq-fkypk2a3IW_5GJ8whKcVE1yiUPUmUa7E/edit?gid=1242144670", "Opex & BigTix"]
   ]},
 
-  { title: "Robo-Trader", bookmarks: [
+  { title: "ΘST & FαR Robo Trader v.1972.54", bookmarks: [
       ["https://docs.google.com/spreadsheets/d/1oOUFGaLJBh1KAAYTuQPi5vTryEFR4woqZCqQTvFM8Lc/edit?gid=1813871616", "ΘST (1% p.m.) | 3rd Fri of Mth 💹"],
       ["https://docs.google.com/spreadsheets/d/1nzR-kc5mptVdLETS-GZMF40CDMSfy7sp0F1A5R98DVg/edit?gid=1265806445", "FαR (2% p.a.) | 1 Oct & 15 Jul 💹"]
   ]},
@@ -201,9 +201,12 @@ const bookmarkGroups = [
       ["https://docs.google.com/spreadsheets/d/1JbtanV0T05Csp-dFvf2dpckkrRUTW_p0zAP3UgGe1f4/edit?gid=1256529310", "EIF ($1.2k) 💰"]
   ]},
 
-  { title: "You take whatever the Price is on Friday expiry or at MACD signal and Trade it!<br>Whatever the Result is up to GOD & the UNIVERSE!<br>Checking the Price is an Addiction, 100% Mental Torture and ZERO cash upside!", bookmarks: [
-  
-  ]},
+{ 
+  title: "<br><br>I have NO OPINION AND NO COMMENT about the market<BR><br>I only trade Options 1x a month and Stocks 2x a year<br><br>I take WHATEVER THE PRICE on those days<br><br>NO SHIT NARRATIVES, NO PANICS, NO REGRETS, NO PRAYING", 
+  bookmarks: [
+
+  ]
+},
 
 
   { title: "Core Salary & Fee Engine", bookmarks: [
@@ -230,8 +233,9 @@ bookmarkGroups.forEach(group => {
   sep.innerHTML = `<span>${group.title}</span>`;
   container.appendChild(sep);
 
-  const grid = document.createElement("div");
+   const grid = document.createElement("div");
   grid.className = "bookmark-grid";
+
   group.bookmarks.forEach(([url, name]) => {
     const a = document.createElement("a");
     a.href = url;
@@ -255,24 +259,15 @@ bookmarkGroups.forEach(group => {
 // ==================== BOOKMARKS 2 ====================
 const bookmarkGroups2 = [
   { title: "Global News", bookmarks: [
-      ["https://wjficap.github.io/fluffyandwayne/cnbc.html", "CNBC"],
-      ["https://wjficap.github.io/fluffyandwayne/wsj-world.html", "WSJ World"],
-      ["https://wjficap.github.io/fluffyandwayne/wsj-markets.html", "WSJ Markets"],
-      ["https://wjficap.github.io/fluffyandwayne/wsj-economy.html", "WSJ Economy"],
-      ["https://wjficap.github.io/fluffyandwayne/bb-markets.html", "Bloomberg Markets"]
+
+      ["https://www.cnbc.com/world/?region=world&region=usa", "CNBC"],
+      ["https://www.bloomberg.com/asia", "Bloomberg"],
+      ["https://www.livehdtv.com/bloomberg/", "Bloomberg TV"]
   ]},
-  { title: "Local Business News", bookmarks: [
-      ["https://www.businesstimes.com.sg/breaking-news", "BT-Breaking (Webpage + Ads)"],
-      ["https://wjficap.github.io/fluffyandwayne/bt-biz.html", "BT-Business"],
-      ["https://wjficap.github.io/fluffyandwayne/bt-ppty.html", "BT-Property"],
-      ["https://wjficap.github.io/fluffyandwayne/st-biz.html", "ST-Business"],
-      ["https://wjficap.github.io/fluffyandwayne/cna-biz.html", "CNA-Business"]
-  ]},
-  { title: "Local News", bookmarks: [
-      ["https://wjficap.github.io/fluffyandwayne/st-sgp.html", "ST-Singapore"],
-      ["https://wjficap.github.io/fluffyandwayne/cna-sgp.html", "CNA-Singapore"],
-      ["https://wjficap.github.io/fluffyandwayne/bt-sgp.html", "BT-Singapore"],
-      ["https://wjficap.github.io/fluffyandwayne/bt-wealth.html", "BT-Wealth"]
+  { title: "Local Papers (Webpage)", bookmarks: [
+      ["https://www.businesstimes.com.sg/breaking-news", "BT-Breaking"],
+      ["https://www.straitstimes.com/breaking-news", "ST-Breaking"],
+      ["https://www.channelnewsasia.com/singapore", "CNA-Singapore"]
   ]}
 ];
 
