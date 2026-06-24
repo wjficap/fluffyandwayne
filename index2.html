@@ -159,6 +159,105 @@ body {
   position: relative;
   z-index: 1;
 }
+
+/* ==========================================
+   iPhone / Small Screen Optimisation
+   Desktop & iPad remain unchanged
+   ========================================== */
+@media screen and (max-width: 600px) {
+
+  body {
+    padding: 8px;
+    overflow-x: hidden;
+  }
+
+  /* Market cards */
+  .market-times {
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+
+  .market {
+    width: calc(50% - 10px);
+    padding: 12px;
+    box-sizing: border-box;
+  }
+
+  .market h3 {
+    font-size: 16px;
+  }
+
+  .market .time {
+    font-size: 20px;
+  }
+
+  .market .countdown {
+    font-size: 12px;
+  }
+
+  /* Bookmark grids */
+  .bookmark-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    width: 100%;
+  }
+
+  .bookmark {
+    padding: 12px 8px;
+    min-height: 95px;
+    box-sizing: border-box;
+  }
+
+  .bookmark img {
+    max-width: 42px;
+    margin-bottom: 6px;
+  }
+
+  .bookmark span {
+    font-size: 14px;
+    line-height: 1.25;
+    word-break: break-word;
+    overflow-wrap: break-word;
+    white-space: normal;
+  }
+
+  /* Long section headings */
+  .separator {
+    margin: 25px 0 15px;
+    width: 100%;
+  }
+
+  .separator span {
+    font-size: 14px;
+    line-height: 1.4;
+    white-space: normal;
+    display: inline-block;
+    max-width: 90%;
+  }
+
+  .separator::before,
+  .separator::after {
+    width: 18%;
+  }
+
+  /* Open All buttons */
+  button {
+    max-width: 220px;
+    width: 100%;
+  }
+
+  /* Spreadsheet area */
+  .sheet-container {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .sheet-container iframe {
+    height: 550px;
+  }
+}
+
+
 </style>
 </head>
 
